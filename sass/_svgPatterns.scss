@@ -1,0 +1,18 @@
+@mixin debug($color){
+ border:3px dotted $color;
+}
+  
+.stage{
+  @include debug(MediumSpringGreen);
+  height:150px;
+  width:150px;
+  margin:20px 20px;
+}
+#stages{
+  @include debug(DarkOrchid);
+
+}
+#tools{
+  @include debug(LightPink);
+
+}

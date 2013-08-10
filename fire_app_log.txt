@@ -1,0 +1,15 @@
+2013-08-10 14:32:41    create stylesheets/app.css 
+2013-08-10 14:32:41    create stylesheets/normalize.css 
+2013-08-10 14:33:03 identical stylesheets/app.css 
+2013-08-10 14:41:58 identical stylesheets/app.css 
+2013-08-10 14:43:13     error sass/app.scss (Line 2 of sass/_svgPatterns.scss: Undefined mixin 'debug'.)
+2013-08-10 14:43:13 overwrite stylesheets/app.css 
+2013-08-10 14:43:37     error sass/app.scss (Line 3 of sass/_svgPatterns.scss: Undefined mixin 'debug'.)
+2013-08-10 14:43:37 overwrite stylesheets/app.css 
+2013-08-10 14:44:03 overwrite stylesheets/app.css 
+2013-08-10 14:47:43 overwrite stylesheets/app.css 
+2013-08-10 14:48:25 overwrite stylesheets/app.css 
+2013-08-10 14:48:28 overwrite stylesheets/app.css 
+2013-08-10 14:51:07 overwrite stylesheets/app.css 
+2013-08-10 14:51:09 overwrite stylesheets/app.css 
+2013-08-10 14:51:25 overwrite stylesheets/app.css 

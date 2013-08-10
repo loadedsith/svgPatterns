@@ -1,21 +1,74 @@
-<!doctype html>
-<html lang="en">
+
+<!DOCTYPE html>
+<!--[if IE 8]> 				 <html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+
 <head>
-    <meta charset="UTF-8" />
-    <title>SVG Tests</title>
+	<meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width" />
+  <title>SVG Patterns</title>
+
+  <link rel="stylesheet" href="stylesheets/normalize.css" />
+  <link rel="stylesheet" href="stylesheets/app.css" />
+
+  <script src="javascripts/vendor/custom.modernizr.js"></script>
+
 </head>
-<body>
-    <div class="wrapper">
-        <div class="content">
-            <object data="steak.svg" type="image/svg+xml">
-              <param name="src" value="steak.img" />
-              <img src="steak.png" />
-            </object>
-            <object data="steakFill.svg" style="height:100%;width:100%;" type="image/svg+xml">
-              <param name="src" value="steakFill.svg" />
-              <img src="steakFill.png" />
-            </object>
+<body ng-app="SVGPatterns" ng-controller="AppController">
+
+	<div class="row">
+		<div class="large-12 columns">
+			<h2>SVG Patterns</h2>
+			<p>This is version .02</p>
+			<hr />
+		</div>
+	</div>
+
+	<div class="row">
+		<div id="stages" class="large-8 columns" ng-model="stages" ng-cloak ng-show="showStages">
+      <h4>Stage</h4>
+    	<div class="row">
+    		<div class="large-12 columns">
+          <ul class="small-block-grid-4">
+            <li ng-repeat="stage in stages" ng-cloak>
+              <div id="stage1" class="stage">
+                <header ng-cloak>{{stage.stageName}}</header>
+                <svg width="{{stage.svg.width || 50}}" height="{{stage.svg.height || 50}}"></svg>
+              </div>          
+            </li>
+          </ul>
         </div>
+      </div>
     </div>
+
+
+		<div id="tools" class="large-4 columns">
+			<h4>Tools</h4>
+			
+		</div>
+	</div>
+
+  <script>
+  document.write('<script src=' +
+  ('__proto__' in {} ? 'javascripts/vendor/zepto' : 'javascripts/vendor/jquery') +
+  '.js><\/script>')
+  </script>
+
+  <script src="javascripts/foundation/foundation.js"></script>
+  <script src="javascripts/foundation/foundation.alerts.js"></script>
+  <script src="javascripts/foundation/foundation.clearing.js"></script>
+  <script src="javascripts/foundation/foundation.cookie.js"></script>
+  <script src="javascripts/foundation/foundation.dropdown.js"></script>
+  <script src="javascripts/foundation/foundation.forms.js"></script>
+  <script src="javascripts/foundation/foundation.joyride.js"></script>
+  <script src="javascripts/foundation/foundation.magellan.js"></script>
+  <script src="javascripts/foundation/foundation.orbit.js"></script>
+  <script src="javascripts/foundation/foundation.placeholder.js"></script>
+  <script src="javascripts/foundation/foundation.reveal.js"></script>
+  <script src="javascripts/foundation/foundation.section.js"></script>
+  <script src="javascripts/foundation/foundation.tooltips.js"></script>
+  <script src="javascripts/foundation/foundation.topbar.js"></script>
+  <script src="javascripts/vendor/angular.js" type="text/javascript" charset="utf-8"></script>
+  <script src="javascripts/svgPatterns.js" type="text/javascript" charset="utf-8"></script>
 </body>
 </html>
