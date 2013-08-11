@@ -2720,7 +2720,7 @@ button.large, .button.large {
     border-radius: 3px;
   }
   /* line 211, ../../../../../Applications/Fire.app/Contents/Resources/lib/ruby/compass_extensions/zurb-foundation-4.1.5/scss/foundation/components/_buttons.scss */
-  button.round, .button.round {
+  button.round, #selectedStage button.alert.button, .button.round, #selectedStage .button.alert {
     -webkit-border-radius: 1000px;
     border-radius: 1000px;
   }
@@ -2850,7 +2850,7 @@ label.inline {
 }
 
 /* line 276, ../../../../../Applications/Fire.app/Contents/Resources/lib/ruby/compass_extensions/zurb-foundation-4.1.5/scss/foundation/components/_forms.scss */
-.prefix.button.round {
+.prefix.button.round, #selectedStage .prefix.button.alert {
   -webkit-border-radius: 0;
   border-radius: 0;
   -moz-border-radius-bottomleft: 1000px;
@@ -2862,7 +2862,7 @@ label.inline {
 }
 
 /* line 277, ../../../../../Applications/Fire.app/Contents/Resources/lib/ruby/compass_extensions/zurb-foundation-4.1.5/scss/foundation/components/_forms.scss */
-.postfix.button.round {
+.postfix.button.round, #selectedStage .postfix.button.alert {
   -webkit-border-radius: 0;
   border-radius: 0;
   -moz-border-radius-topright: 1000px;
@@ -2932,7 +2932,7 @@ span.postfix.radius {
   border-bottom-right-radius: 3px;
 }
 /* line 298, ../../../../../Applications/Fire.app/Contents/Resources/lib/ruby/compass_extensions/zurb-foundation-4.1.5/scss/foundation/components/_forms.scss */
-.input-group.round > *:first-child, .input-group.round > *:first-child * {
+.input-group.round > *:first-child, #selectedStage .input-group.alert.button > *:first-child, .input-group.round > *:first-child *, #selectedStage .input-group.alert.button > *:first-child * {
   -moz-border-radius-bottomleft: 1000px;
   -moz-border-radius-topleft: 1000px;
   -webkit-border-bottom-left-radius: 1000px;
@@ -2941,7 +2941,7 @@ span.postfix.radius {
   border-top-left-radius: 1000px;
 }
 /* line 301, ../../../../../Applications/Fire.app/Contents/Resources/lib/ruby/compass_extensions/zurb-foundation-4.1.5/scss/foundation/components/_forms.scss */
-.input-group.round > *:last-child, .input-group.round > *:last-child * {
+.input-group.round > *:last-child, #selectedStage .input-group.alert.button > *:last-child, .input-group.round > *:last-child *, #selectedStage .input-group.alert.button > *:last-child * {
   -moz-border-radius-topright: 1000px;
   -moz-border-radius-bottomright: 1000px;
   -webkit-border-top-right-radius: 1000px;
@@ -3401,7 +3401,7 @@ form.custom .custom.disabled {
   border-bottom-right-radius: 3px;
 }
 /* line 52, ../../../../../Applications/Fire.app/Contents/Resources/lib/ruby/compass_extensions/zurb-foundation-4.1.5/scss/foundation/components/_button-groups.scss */
-.button-group.round > *:first-child, .button-group.round > *:first-child > a, .button-group.round > *:first-child > button, .button-group.round > *:first-child > .button {
+.button-group.round > *:first-child, #selectedStage .button-group.alert.button > *:first-child, .button-group.round > *:first-child > a, #selectedStage .button-group.alert.button > *:first-child > a, .button-group.round > *:first-child > button, #selectedStage .button-group.alert.button > *:first-child > button, .button-group.round > *:first-child > .button, #selectedStage .button-group.alert.button > *:first-child > .button {
   -moz-border-radius-bottomleft: 1000px;
   -moz-border-radius-topleft: 1000px;
   -webkit-border-bottom-left-radius: 1000px;
@@ -3410,7 +3410,7 @@ form.custom .custom.disabled {
   border-top-left-radius: 1000px;
 }
 /* line 56, ../../../../../Applications/Fire.app/Contents/Resources/lib/ruby/compass_extensions/zurb-foundation-4.1.5/scss/foundation/components/_button-groups.scss */
-.button-group.round > *:last-child, .button-group.round > *:last-child > a, .button-group.round > *:last-child > button, .button-group.round > *:last-child > .button {
+.button-group.round > *:last-child, #selectedStage .button-group.alert.button > *:last-child, .button-group.round > *:last-child > a, #selectedStage .button-group.alert.button > *:last-child > a, .button-group.round > *:last-child > button, #selectedStage .button-group.alert.button > *:last-child > button, .button-group.round > *:last-child > .button, #selectedStage .button-group.alert.button > *:last-child > .button {
   -moz-border-radius-topright: 1000px;
   -moz-border-radius-bottomright: 1000px;
   -webkit-border-top-right-radius: 1000px;
@@ -3699,7 +3699,7 @@ form.custom .custom.disabled {
   border-bottom-right-radius: 3px;
 }
 /* line 163, ../../../../../Applications/Fire.app/Contents/Resources/lib/ruby/compass_extensions/zurb-foundation-4.1.5/scss/foundation/components/_split-buttons.scss */
-.split.button.round span {
+.split.button.round span, #selectedStage .split.button.alert span {
   -moz-border-radius-topright: 1000px;
   -moz-border-radius-bottomright: 1000px;
   -webkit-border-top-right-radius: 1000px;
@@ -5224,7 +5224,7 @@ form.custom .custom.disabled {
   border-radius: 3px;
 }
 /* line 99, ../../../../../Applications/Fire.app/Contents/Resources/lib/ruby/compass_extensions/zurb-foundation-4.1.5/scss/foundation/components/_alert-boxes.scss */
-.alert-box.round {
+.alert-box.round, #selectedStage .alert-box.alert.button {
   -webkit-border-radius: 1000px;
   border-radius: 1000px;
 }
@@ -5361,7 +5361,7 @@ kbd {
   border-radius: 3px;
 }
 /* line 77, ../../../../../Applications/Fire.app/Contents/Resources/lib/ruby/compass_extensions/zurb-foundation-4.1.5/scss/foundation/components/_labels.scss */
-.label.round {
+.label.round, #selectedStage .label.alert.button {
   -webkit-border-radius: 1000px;
   border-radius: 1000px;
 }
@@ -5632,12 +5632,12 @@ kbd {
   border-radius: 2px;
 }
 /* line 64, ../../../../../Applications/Fire.app/Contents/Resources/lib/ruby/compass_extensions/zurb-foundation-4.1.5/scss/foundation/components/_progress-bars.scss */
-.progress.round {
+.progress.round, #selectedStage .progress.alert.button {
   -webkit-border-radius: 1000px;
   border-radius: 1000px;
 }
 /* line 65, ../../../../../Applications/Fire.app/Contents/Resources/lib/ruby/compass_extensions/zurb-foundation-4.1.5/scss/foundation/components/_progress-bars.scss */
-.progress.round .meter {
+.progress.round .meter, #selectedStage .progress.alert.button .meter {
   -webkit-border-radius: 999px;
   border-radius: 999px;
 }
@@ -5920,17 +5920,17 @@ kbd {
     border-radius: 3px;
   }
   /* line 239, ../../../../../Applications/Fire.app/Contents/Resources/lib/ruby/compass_extensions/zurb-foundation-4.1.5/scss/foundation/components/_switch.scss */
-  div.switch.round {
+  div.switch.round, #selectedStage div.switch.alert.button {
     -webkit-border-radius: 1000px;
     border-radius: 1000px;
   }
   /* line 240, ../../../../../Applications/Fire.app/Contents/Resources/lib/ruby/compass_extensions/zurb-foundation-4.1.5/scss/foundation/components/_switch.scss */
-  div.switch.round > span {
+  div.switch.round > span, #selectedStage div.switch.alert.button > span {
     -webkit-border-radius: 999px;
     border-radius: 999px;
   }
   /* line 241, ../../../../../Applications/Fire.app/Contents/Resources/lib/ruby/compass_extensions/zurb-foundation-4.1.5/scss/foundation/components/_switch.scss */
-  div.switch.round label {
+  div.switch.round label, #selectedStage div.switch.alert.button label {
     padding: 0 0.5625em;
   }
 
@@ -6267,7 +6267,27 @@ html, body {
   background-color: #80B5E3;
 }
 
-/* line 22, ../sass/_svgPatterns.scss */
+/* line 15, ../sass/_svgPatterns.scss */
+.stage .card {
+  height: 8em !important;
+}
+/* line 18, ../sass/_svgPatterns.scss */
+.stage .removeStage {
+  float: right;
+}
+/* line 21, ../sass/_svgPatterns.scss */
+.stage .svgList {
+  border: 3px dotted pink;
+  height: 4em;
+  overflow: auto;
+}
+
+/* line 28, ../sass/_svgPatterns.scss */
+#selectedStage .alert.button {
+  float: right;
+}
+
+/* line 37, ../sass/_svgPatterns.scss */
 #stages {
   display: block;
   height: 100%;
@@ -6275,17 +6295,17 @@ html, body {
   overflow-y: scroll;
 }
 
-/* line 28, ../sass/_svgPatterns.scss */
+/* line 44, ../sass/_svgPatterns.scss */
 svg {
   box-shadow: 0px 0px 3px #000;
 }
 
-/* line 32, ../sass/_svgPatterns.scss */
+/* line 48, ../sass/_svgPatterns.scss */
 #tools ul {
   list-style: none;
 }
 
-/* line 37, ../sass/_svgPatterns.scss */
+/* line 53, ../sass/_svgPatterns.scss */
 .animate-enter {
   -webkit-transition: 300ms linear all;
   -moz-transition: 300ms linear all;
@@ -6294,7 +6314,7 @@ svg {
   opacity: 0;
 }
 
-/* line 42, ../sass/_svgPatterns.scss */
+/* line 58, ../sass/_svgPatterns.scss */
 .animate-enter.animate-enter-active {
   opacity: 1;
 }

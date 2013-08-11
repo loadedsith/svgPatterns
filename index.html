@@ -13,11 +13,6 @@
 
 </head>
 <body ng-app="SVGPatterns" ng-controller="AppController">
-  <div id="addLineModal" class="reveal-modal">
-    <h2>Add A Line.</h2>
-    <div class="button success">Ok</div>
-    <a class="close-reveal-modal">&times;</a>
-  </div>
 	<div class="row">
 		<div class="large-12 columns">
 			<h2>SVG Patterns</h2>
@@ -35,26 +30,70 @@
       </ul>
 		</div>
     
-		<div class="large-9 columns" >
-			<h2 ng-bind="selected.stage.index+1+':'+selected.stage.name.text"></h2>
-      <input type="text" ng-model="selected.stage.name.text">
-      <div style="color: {{colors[ mod(selected.stage.index,colors.length) ]}}; background-color: {{backgroundColors[mod(selected.stage.index,backgroundColors.length)]}}; {{selected.stage.css}}">
+		<div class="large-9 columns"style="color: {{selected.stage.color}}; background-color: {{selected.stage.backgroundColor}}; {{selected.stage.css}}">
+			<h2 style="color: {{selected.stage.color}}; background-color: {{selected.stage.backgroundColor}}; {{selected.stage.css}}" ng-bind="selected.stage.index+1+':'+selected.stage.name.text"></h2>
+      <input  type="text" ng-model="selected.stage.name.text">
+      <div >
         <div class="section-container auto" data-section="auto" >
-          <section ng-repeat="svg in selected.stage.svgs"  ng-animate=" 'animate' "  on-finish-render>
+          <section ng-repeat="svg in selected.stage.svgs"  ng-animate="'animate'"  on-finish-render>
+            
             <p data-section-title class="title"><a href="#page{{$index}}" ng-click="selectSvg($index)" ng-bind="svg.name.text"></a></p>
             <div class="content" data-section-content>
-              <div class="alert button" ng-click="removeSvg($index)">-</div>
-              <form ng-change="makeSvg(svg)" ng-model="svg">
+              <!-- <div id="addLine" ng-show="showAddLineDialog" ng-model="addLineDialog">
+                <h2>Add A Line.</h2>
+                <form ng-submit="confirmLineText()">
+                  <input type="text" ng-model="addLineDialog.text"/><div class="button" ng-click="clearAddLineDialogText()">clear</div>
+                  <div class="button success" ng-click="confirmLineText()">Ok</div>
+                  <a class="close-reveal-modal">&times;</a>
+                </form>
+                <form ng-submit="confirmLineText()">
+                  
+                  <label for="x1Vars">x1</label><input id="x1Vars" type="text" ng-model="addLineDialog.x1" />
+                  <label for="y1Vars">y1</label><input id="y1Vars" type="text" ng-model="addLineDialog.y1" />
+                  <label for="x1Vars">x2</label><input id="x2Vars" type="text" ng-model="addLineDialog.x2" />
+                  <label for="y1Vars">y2</label><input id="y2Vars" type="text" ng-model="addLineDialog.y2" />
+                  <label for="stroke">stroke</label><input type="text" ng-model="addLineDialog.stroke" />
+                  <label for="strokeWidth">stroke-width</label><input type="text" ng-model="addLineDialog.strokeWidth" />
+                  <div class="button" ng-click="clearAddLineDialogVars()">clear</div>
+                  <div class="button success" ng-click="confirmLineVars()">Ok</div>
+                </form>
+              </div> -->
+                <!-- <div id="myModal" class="reveal-modal">
+                  <h2>Awesome. I have it.</h2>
+                  <p class="lead">Your couch.  It is mine.</p>
+                  <p>Im a cool paragraph that lives inside of an even cooler modal. Wins</p>
 
+                </div>
+               -->
+              <!-- <div id="addEllipse" ng-show="showAddEllipseDialog" ng-model="addEllipseDialog">
+                <h2>Add A Ellipse.</h2>
+                <form ng-submit="confirmEllipseText()">
+                 <label for="x1"> <input id="ellipseText" type="text" ng-model="addEllipseDialog.text"/><div class="button" ng-click="clearAddEllipseDialogText()">clear</div>
+                  <div class="button success" ng-click="confirmEllipseText()">Ok</div>
+                  <a class="close-reveal-modal">&times;</a>
+                </form>
+                <!-- cx cy rx ry fill -->
+                <!-- <form ng-submit="confirmLineText()">
+                  <label for="cx">cx</label><input type="text" ng-model="addEllipseDialog.cx" />
+                  <label for="cy">cy</label><input type="text" ng-model="addEllipseDialog.cy" />
+                  <label for="rx">rx</label><input type="text" ng-model="addEllipseDialog.rx" />
+                  <label for="ry">ry</label><input type="text" ng-model="addEllipseDialog.ry" />
+                  <label for="fill">fill</label><input type="text" ng-model="addEllipseDialog.fill" />
+                  <label for="stroke">stroke</label><input type="text" ng-model="addEllipseDialog.stroke" />
+                  <label for="strokeWidth">stroke-width</label><input type="text" ng-model="addEllipseDialog.strokeWidth" />
+                  <div class="button" ng-click="clearAddEllipseDialogVars()">clear</div>
+                  <div class="button success" ng-click="confirmEllipseVars()">Ok</div>
+                </form>
+              </div> -->
+               
+              
+              <div class="alert small button" ng-click="removeSvg($index)">&times;</div>
+              <form ng-change="makeSvg(svg)" ng-model="svg">
                 <input type="text" ng-model="svg.name.text"></input>
                 <ul class="inline-list">
-                  <li>
-                    <label for="svgWidth">Width</label><input ng-model="svg.width" id="svgWidth" type="text">
-                  </li>
-                  <li><label for="svgHeight">Height</label><input ng-model="svg.height" id="svgHeight" type="text">
-                  </li>
-                  <li><label for="svgViewBox">ViewBox</label><input ng-model="svg.viewBox" id="svgViewBox" type="text">
-                  </li>
+                  <li><label for="svgWidth">Width</label><input ng-model="svg.width" id="svgWidth" type="text"></li>
+                  <li><label for="svgHeight">Height</label><input ng-model="svg.height" id="svgHeight" type="text"></li>
+                  <li><label for="svgViewBox">ViewBox</label><input ng-model="svg.viewBox" id="svgViewBox" type="text"></li>
                 </ul>
                 <label for="svgContent">SVG</label><textarea ng-model="svg.content" id="svgContent" type="text"></textarea>
               </form>
@@ -63,16 +102,10 @@
             </div>
           </section>
         </div>
-
       </div>
-		</div>
-	</div>
-  <div class="row">
-    <div class="panel large-12 columns">
-      <hr/>
-      
     </div>
   </div>
+ 
   <div class="row">
     <div id="tools" class="panel large-2 columns" ng-cloak>
       <ul >
@@ -83,26 +116,51 @@
 		</div>
 		<div id="stages" class="large-10 columns" ng-model="stages" ng-cloak >
       <h4>Stages</h4>
-      
     	<div class="row">
     		<div class="large-12 columns">
           <ul class="small-block-grid-2" ng-cloak ng-show="showStages">
-            <li ng-repeat="stage in stages track by $index" ng-cloak  ng-animate=" 'animate' ">
-              <div  ng-click="selectStage($index)" id="stage{{$index}}" style="background-color: {{backgroundColors[mod($index,backgroundColors.length)]}}; {{stage.css}}" class=" button stage">
-                <p style="color: {{colors[ mod($index,colors.length) ]}}; {{stage.name.css}}" ng-bind="($index+1)+': '+ stage.name.text"></p>
-                <section ng-repeat="svg in stage.svgs" style="{{stage.name.css}}" ng-bind="                   (svg.name.text||$index+1)+': '+svg.width+'x'+svg.height" ng-animate=" 'animate' ">
-
-                </section>
-              </div>  
-              <p><span  style="color: {{colors[ mod($index,colors.length) ]}};{{stage.name.css}}" ng-bind="colors[ mod($index,colors.length)]"></span>/<span style="color: {{backgroundColors[ mod($index,backgroundColors.length) ]}};stage.name.css" ng-bind="backgroundColors[mod($index,backgroundColors.length)]"></span>        
+            <li ng-repeat="stage in stages track by $index" ng-cloak class="stage"  ng-animate=" 'animate' ">
+              <div style="padding:15px;border-radius:15px;cursor:pointer;background-color: {{stage.backgroundColor}};color: {{stage.color}};{{stage.css}};">
+              <span class="removeStage alert small button round" ng-click="removeStage($index)">&times;</span>
+                <div ng-click="selectStage($index)" id="stage{{$index}}" style="{{stage.css}}" class="card">
+                  <p style="{{stage.name.css}}" ng-bind="($index+1)+': '+ stage.name.text"></p>
+                <span ng-bind="stage.color"></span>/<span ng-bind="stage.backgroundColor"></span>
+                <div class="svgList">
+                  <section ng-repeat="svg in stage.svgs" style="{{stage.name.css}}" ng-bind="                   (svg.name.text||$index+1)+': '+svg.width+'x'+svg.height" ng-animate=" 'animate' ">
+                  </section>
+                </div>
+                </div>
+              </div>
             </li>
           </ul>
         </div>
       </div>
       <span ng-bind="stages.length"></span>
     </div>
-
 	</div>
+
+  
+  <div id="addElement" class="reveal-modal" ng-show="showAddElementDialog" ng-model="addElementDialog">
+    <section ng-repeat="element in addElementDialog.elements">
+      <div id="addElement{{element.name}}" >
+        <form>
+          <p ng-bind="element.name"></p>
+          <ul class="inline-list">
+            <li ng-repeat="argument in element.arguments">
+              <label for="addElement{{argument.var}}">{{argument.name}}</label><input type="{{argument.type}}" ng-model="argument.value" value="{{argument.value}}"/>
+              {{argument.value}}
+            </li>
+          </ul>
+          <div class="alert button" ng-click="clearElement('{{element.name}}')">Clear</div>
+          <div class="success button" ng-click="confrimElement('{{element.name}}')">Go</div>
+        </form>
+        <a class="close-reveal-modal">&#215;</a>
+      </div>
+    </section>
+    
+    
+  </div>
+
 
   <script>
   document.write('<script src=' +

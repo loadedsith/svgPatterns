@@ -12,9 +12,24 @@ html,body{
   background-color:#80B5E3;
 } 
 .stage{
-
+  .card{
+    height:8em!important;  
+  }
+  .removeStage{
+    float:right;
+  }
+  .svgList{
+    @include debug(Pink);
+    height:4em;
+    overflow:auto;
+  }
 }
 #selectedStage{
+  .alert.button{
+    float:right;
+    @extend .round;
+
+  }
   ul{
 
   }
@@ -24,6 +39,7 @@ html,body{
   height:100%;
   overflow-x:hidden;
   overflow-y:scroll;
+  
 }
 svg{
   box-shadow:0px 0px 3px #000;
