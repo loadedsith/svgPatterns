@@ -1,18 +1,45 @@
+@import "compass/css3";
+@import "compass/css3/transition";
 @mixin debug($color){
  border:3px dotted $color;
 }
-  
-.stage{
-  @include debug(MediumSpringGreen);
-  height:150px;
-  width:150px;
-  margin:20px 20px;
+[ng\:cloak], [ng-cloak], .ng-cloak {
+  display: none !important;
 }
-#stages{
-  @include debug(DarkOrchid);
+html,body{
+  overflow-x:hidden;
+  height:100%;
+  background-color:#80B5E3;
+} 
+.stage{
 
 }
+#selectedStage{
+  ul{
+
+  }
+}
+#stages{
+  display:block;
+  height:100%;
+  overflow-x:hidden;
+  overflow-y:scroll;
+}
+svg{
+  box-shadow:0px 0px 3px #000;
+}
 #tools{
-  @include debug(LightPink);
+  ul{
+    list-style: none ;
+  }
+
+}
+.animate-enter {
+	@include transition( 300ms linear all);
+	opacity: 0;
+}
+ 
+.animate-enter.animate-enter-active {
+	opacity: 1;
 
 }
