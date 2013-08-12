@@ -250,16 +250,20 @@
       $scope.addElementPreview = function(name){
         var element = $scope.getElementByName(name);
         var theString = "<"+name;
-          for (var i = element.attributes.length - 1; i >= 0; i--) {
-            var attribute = element.attributes[i];
-            theString += " "+attribute.var+"='"+attribute.value+"'";
+          for (var i = element.tags.length - 1; i >= 0; i--) {
+            var tags = element.tags[i];
+              for (var ii = tags.length - 1; ii >= 0; ii--) {
+                var attribute = element.tags[i];
+                theString += " "+attribute.var+"='"+attribute.value+"'";
+              }
+              if(element.autoCloseTag === true){            
+                 theString +="/>";
+              }else{
+                 theString +="></"+name+">";
+              }
           }
           
-          if(element.autoCloseTag === true){            
-             theString +="/>";
-          }else{
-             theString +="></"+name+">";
-          }
+         
           $scope.contentElementPreview = theString;
       }
       $scope.makeSvgPreview = function(){
@@ -280,7 +284,7 @@
       });
       $scope.setActiveAddElementTool = function(index){
         console.log(index);
-        console.log("contentprevie",$scope.contentPreview)
+        console.log("contentPreview",$scope.contentPreview);
         $scope.addElementDialog.selected = index;
         $scope.makeSvgPreview();
       };
