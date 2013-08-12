@@ -1,0 +1,19 @@
+[
+  {
+    "name":{
+      "text" : "Mozilla Example Svg"
+    },
+    "color":"White",
+    "backgroundColor":"Black",
+    "svgs":[
+      {
+        "name":{
+            "text":"Triangle Path"
+        },
+        "width":"4cm",
+        "height":"4cm",
+        "viewBox":"0 0 400 400",
+        "content":"<rect x='1' y='1' width='398' height='398' fill='none' stroke='blue' /><path d='M 100 100 L 300 100 L 200 300 z' fill='red' stroke='blue' stroke-width='3' />"}
+    ]
+  }
+]

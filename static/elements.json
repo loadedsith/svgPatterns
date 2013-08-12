@@ -1,0 +1,57 @@
+[
+  {
+    "name":"line",
+    "autoCloseTag":true,
+    "attributes":
+    [
+          {"var":"x1","name":"x1","type":"text","value":15},
+          {"var":"y1","name":"y1","type":"text","value":15},
+          {"var":"x2","name":"x2","type":"text","value":45},
+          {"var":"y2","name":"y2","type":"text","value":45},
+          {"var":"stroke","name":"Stroke","type":"text","value":"Black"},
+          {"var":"stroke-width","name":"Stroke Width","type":"text","value":3}
+    ]
+  },
+  {
+    "name":"ellipse",
+    "autoCloseTag":true,
+    "attributes":
+    [
+          {"var":"cx","name":"cx","type":"text","value":15},
+          {"var":"cy","name":"cy","type":"text","value":15},
+          {"var":"rx","name":"rx","type":"text","value":45},
+          {"var":"ry","name":"ry","type":"text","value":45},
+          {"var":"fill","name":"fill","type":"text","value":"Blue"},
+          {"var":"stroke","name":"Stroke","type":"text","value":"Black"},
+          {"var":"stroke-width","name":"Stroke Width","type":"text","value":3}
+    ]
+  },
+  {
+    "name":"path",
+    "autoCloseTag":true,
+    "attributes":
+    [
+          {"var":"d","name":"data","type":"text","value":"M150 0 L75 200 L225 200 Z"},
+          {"var":"fill","name":"fill","type":"text","value":"Blue"},
+          {"var":"stroke","name":"Stroke","type":"text","value":"Black"},
+          {"var":"stroke-width","name":"Stroke Width","type":"text","value":3}
+    ],
+    "attributeOptions":[
+      {"name":"d",
+        "options":{
+          "":"[Blank]",
+          "M" : "moveto",
+          "L" : "lineto",
+          "H" : "horizontal lineto" ,
+          "V" : "vertical lineto" ,
+          "C" : "curveto",
+          "S" : "smooth curveto" ,
+          "Q" : "quadratic Bézier curve"  ,
+          "T" : "smooth quadratic Bézier curveto"   ,
+          "A" : "elliptical Arc" ,
+          "Z" : "closepath"
+        }
+      }
+    ]
+  }
+]

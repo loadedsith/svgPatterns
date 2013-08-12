@@ -39,54 +39,6 @@
             
             <p data-section-title class="title"><a href="#page{{$index}}" ng-click="selectSvg($index)" ng-bind="svg.name.text"></a></p>
             <div class="content" data-section-content>
-              <!-- <div id="addLine" ng-show="showAddLineDialog" ng-model="addLineDialog">
-                <h2>Add A Line.</h2>
-                <form ng-submit="confirmLineText()">
-                  <input type="text" ng-model="addLineDialog.text"/><div class="button" ng-click="clearAddLineDialogText()">clear</div>
-                  <div class="button success" ng-click="confirmLineText()">Ok</div>
-                  <a class="close-reveal-modal">&times;</a>
-                </form>
-                <form ng-submit="confirmLineText()">
-                  
-                  <label for="x1Vars">x1</label><input id="x1Vars" type="text" ng-model="addLineDialog.x1" />
-                  <label for="y1Vars">y1</label><input id="y1Vars" type="text" ng-model="addLineDialog.y1" />
-                  <label for="x1Vars">x2</label><input id="x2Vars" type="text" ng-model="addLineDialog.x2" />
-                  <label for="y1Vars">y2</label><input id="y2Vars" type="text" ng-model="addLineDialog.y2" />
-                  <label for="stroke">stroke</label><input type="text" ng-model="addLineDialog.stroke" />
-                  <label for="strokeWidth">stroke-width</label><input type="text" ng-model="addLineDialog.strokeWidth" />
-                  <div class="button" ng-click="clearAddLineDialogVars()">clear</div>
-                  <div class="button success" ng-click="confirmLineVars()">Ok</div>
-                </form>
-              </div> -->
-                <!-- <div id="myModal" class="reveal-modal">
-                  <h2>Awesome. I have it.</h2>
-                  <p class="lead">Your couch.  It is mine.</p>
-                  <p>Im a cool paragraph that lives inside of an even cooler modal. Wins</p>
-
-                </div>
-               -->
-              <!-- <div id="addEllipse" ng-show="showAddEllipseDialog" ng-model="addEllipseDialog">
-                <h2>Add A Ellipse.</h2>
-                <form ng-submit="confirmEllipseText()">
-                 <label for="x1"> <input id="ellipseText" type="text" ng-model="addEllipseDialog.text"/><div class="button" ng-click="clearAddEllipseDialogText()">clear</div>
-                  <div class="button success" ng-click="confirmEllipseText()">Ok</div>
-                  <a class="close-reveal-modal">&times;</a>
-                </form>
-                <!-- cx cy rx ry fill -->
-                <!-- <form ng-submit="confirmLineText()">
-                  <label for="cx">cx</label><input type="text" ng-model="addEllipseDialog.cx" />
-                  <label for="cy">cy</label><input type="text" ng-model="addEllipseDialog.cy" />
-                  <label for="rx">rx</label><input type="text" ng-model="addEllipseDialog.rx" />
-                  <label for="ry">ry</label><input type="text" ng-model="addEllipseDialog.ry" />
-                  <label for="fill">fill</label><input type="text" ng-model="addEllipseDialog.fill" />
-                  <label for="stroke">stroke</label><input type="text" ng-model="addEllipseDialog.stroke" />
-                  <label for="strokeWidth">stroke-width</label><input type="text" ng-model="addEllipseDialog.strokeWidth" />
-                  <div class="button" ng-click="clearAddEllipseDialogVars()">clear</div>
-                  <div class="button success" ng-click="confirmEllipseVars()">Ok</div>
-                </form>
-              </div> -->
-               
-              
               <div class="alert small button" ng-click="removeSvg($index)">&times;</div>
               <form ng-change="makeSvg(svg)" ng-model="svg">
                 <input type="text" ng-model="svg.name.text"></input>
@@ -138,27 +90,36 @@
       <span ng-bind="stages.length"></span>
     </div>
 	</div>
-
   
-  <div id="addElement" class="reveal-modal" ng-show="showAddElementDialog" ng-model="addElementDialog">
-    <section ng-repeat="element in addElementDialog.elements">
-      <div id="addElement{{element.name}}" >
-        <form>
-          <p ng-bind="element.name"></p>
-          <ul class="inline-list">
-            <li ng-repeat="argument in element.arguments">
-              <label for="addElement{{argument.var}}">{{argument.name}}</label><input type="{{argument.type}}" ng-model="argument.value" value="{{argument.value}}"/>
-              {{argument.value}}
-            </li>
-          </ul>
-          <div class="alert button" ng-click="clearElement('{{element.name}}')">Clear</div>
-          <div class="success button" ng-click="confrimElement('{{element.name}}')">Go</div>
-        </form>
-        <a class="close-reveal-modal">&#215;</a>
-      </div>
-    </section>
-    
-    
+  <div id="addElement" class="reveal-modal"  ng-model="addElementDialog">
+    <h2>Add Element</h2> 
+    <div class="preview">
+      <div ng-bind-html-unsafe="contentPreview"></div>
+    </div>
+    <div class="section-container auto" data-section>
+      <section ng-repeat="element in addElementDialog.elements" ng-class="{active:isAddElementActive($index)}" >
+        <p class="title" data-section-title><a href="#{{element.name}}" ng-click="setActiveAddElementTool($index)" ng-bind="element.name"></a></p>
+        <div class="content" data-section-content>
+          <form id="addElement{{element.name}}" ng-chage="makeSvgPreview()">
+            <ul class="inline-list" >
+              <li ng-repeat="tag in element.tags.text" >
+                <section ng-repeat="attribute in tag.attributes" >
+                  <label for="addElement{{attribute.var}}" ng-bind="attribute.name"></label><input type="{{attribute.type}}" ng-model="attribute.value" value="{{attribute.value}}" ng-change="makeSvgPreview()"/>
+                </section>
+              </li>
+              <li ng-repeat="tag in element.tags.textarea" >
+                <section ng-repeat="attribute in tag.attributes" >
+                  <label for="addElement{{attribute.var}}" ng-bind="attribute.name"></label><textarea ng-model="attribute.value" ng-change="makeSvgPreview()"></textarea>
+                </section>
+              </li>
+            </ul>
+            <div class="alert button" ng-click="clearElement('{{element.name}}')">Clear</div>
+            <div class="success button" ng-click="confrimElement('{{element.name}}')">Go</div>
+          </form>
+        </div>
+      </section>
+    </div>
+    <a class="close-reveal-modal">&#215;</a>
   </div>
 
 

@@ -6267,17 +6267,15 @@ html, body {
   background-color: #80B5E3;
 }
 
-/* line 15, ../sass/_svgPatterns.scss */
-.stage .card {
-  height: 8em !important;
-}
 /* line 18, ../sass/_svgPatterns.scss */
 .stage .removeStage {
   float: right;
 }
 /* line 21, ../sass/_svgPatterns.scss */
 .stage .svgList {
-  border: 3px dotted pink;
+  -webkit-box-shadow: 0px 0px 7px black, 0px 0px 13px white;
+  -moz-box-shadow: 0px 0px 7px black, 0px 0px 13px white;
+  box-shadow: 0px 0px 7px black, 0px 0px 13px white;
   height: 4em;
   overflow: auto;
 }
@@ -6286,8 +6284,12 @@ html, body {
 #selectedStage .alert.button {
   float: right;
 }
+/* line 36, ../sass/_svgPatterns.scss */
+#selectedStage pre {
+  padding-bottom: 2em;
+}
 
-/* line 37, ../sass/_svgPatterns.scss */
+/* line 40, ../sass/_svgPatterns.scss */
 #stages {
   display: block;
   height: 100%;
@@ -6295,17 +6297,24 @@ html, body {
   overflow-y: scroll;
 }
 
-/* line 44, ../sass/_svgPatterns.scss */
+/* line 47, ../sass/_svgPatterns.scss */
 svg {
   box-shadow: 0px 0px 3px #000;
 }
 
-/* line 48, ../sass/_svgPatterns.scss */
+/* line 51, ../sass/_svgPatterns.scss */
 #tools ul {
   list-style: none;
 }
 
-/* line 53, ../sass/_svgPatterns.scss */
+/* line 57, ../sass/_svgPatterns.scss */
+#addElement .preview {
+  -webkit-box-shadow: 0px 0px 5px #333333;
+  -moz-box-shadow: 0px 0px 5px #333333;
+  box-shadow: 0px 0px 5px #333333;
+}
+
+/* line 62, ../sass/_svgPatterns.scss */
 .animate-enter {
   -webkit-transition: 300ms linear all;
   -moz-transition: 300ms linear all;
@@ -6314,7 +6323,7 @@ svg {
   opacity: 0;
 }
 
-/* line 58, ../sass/_svgPatterns.scss */
+/* line 67, ../sass/_svgPatterns.scss */
 .animate-enter.animate-enter-active {
   opacity: 1;
 }
