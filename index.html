@@ -102,10 +102,11 @@
         <div class="content" data-section-content>
           <form id="addElement{{element.name}}" ng-chage="makeSvgPreview()">
             <ul class="inline-list" >
-              <li ng-repeat="tag in element.tags.text" >
-                <section ng-repeat="attribute in tag.attributes" >
+              <li ng-repeat="attribute in element.tags.text.attributes" >
+              <!-- <li ng-repeat="tag in element.tags.text" > -->
+                <!-- <section ng-repeat="attribute in tag.attributes" > -->
                   <label for="addElement{{attribute.var}}" ng-bind="attribute.name"></label><input type="{{attribute.type}}" ng-model="attribute.value" value="{{attribute.value}}" ng-change="makeSvgPreview()"/>
-                </section>
+                <!-- </section> -->
               </li>
               <li ng-repeat="tag in element.tags.textarea" >
                 <section ng-repeat="attribute in tag.attributes" >

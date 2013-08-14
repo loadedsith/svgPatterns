@@ -169,7 +169,7 @@
         var element = $scope.getElementByName(name);
         var theString = "<"+name;
         
-          for (var i = element.attributes.length - 1; i >= 0; i--) {
+          for (var i = element.tags.length - 1; i >= 0; i--) {
             var attribute = element.attributes[i];
             theString += " "+attribute.var+"='"+attribute.value+"'";
           }
