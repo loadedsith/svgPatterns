@@ -93,7 +93,7 @@
   
   <div id="addElement" class="reveal-modal"  ng-model="addElementDialog">
     <h2>Add Element</h2> 
-    <div class="preview">
+    <div id="preview" class="preview">
       <div ng-bind-html-unsafe="contentPreview"></div>
     </div>
     <div class="section-container auto" data-section>
@@ -101,21 +101,24 @@
         <p class="title" data-section-title><a href="#{{element.name}}" ng-click="setActiveAddElementTool($index)" ng-bind="element.name"></a></p>
         <div class="content" data-section-content>
           <form id="addElement{{element.name}}" ng-chage="makeSvgPreview()">
-            <ul class="inline-list" >
+            <ul class="inline-list">
               <li ng-repeat="attribute in element.tags.text.attributes" >
-              <!-- <li ng-repeat="tag in element.tags.text" > -->
-                <!-- <section ng-repeat="attribute in tag.attributes" > -->
-                  <label for="addElement{{attribute.var}}" ng-bind="attribute.name"></label><input type="{{attribute.type}}" ng-model="attribute.value" value="{{attribute.value}}" ng-change="makeSvgPreview()"/>
-                <!-- </section> -->
+                <label for="addElement{{attribute.var}}" ng-bind="attribute.name"></label><input type="{{attribute.type}}" ng-model="attribute.value" value="{{attribute.value}}" ng-change="makeSvgPreview()"/>
               </li>
-              <li ng-repeat="tag in element.tags.textarea" >
-                <section ng-repeat="attribute in tag.attributes" >
-                  <label for="addElement{{attribute.var}}" ng-bind="attribute.name"></label><textarea ng-model="attribute.value" ng-change="makeSvgPreview()"></textarea>
-                </section>
+              <li ng-repeat="attribute in element.tags.textarea.attributes">
+                <label for="addElement{{attribute.var}}" ng-bind="attribute.name"></label><textarea ng-model="attribute.value" ng-change="makeSvgPreview()"></textarea>
+              </li>
+              <li ng-repeat="attribute in element.tags.clickable.attributes" ng-init="enablePreviewClick(attribute.values)">
+                <label for="addElement{{attribute.name}}" ng-bind="attribute.name"></label>
+                <ul >
+                  <li ng-repeat="value in attribute.values">
+                      <a ng-bind="value"></a>
+                  </li>
+                </ul>
               </li>
             </ul>
             <div class="alert button" ng-click="clearElement('{{element.name}}')">Clear</div>
-            <div class="success button" ng-click="confrimElement('{{element.name}}')">Go</div>
+            <div class="success button" ng-click="confirmElement('{{element.name}}')">Go</div>
           </form>
         </div>
       </section>

@@ -102,6 +102,8 @@
       $scope.selected = {};
       $scope.selected.svg = 0;
       
+      $scope.clickIndex = 0;
+      
       $scope.svgTemplates = {};
       $scope.svgTemplates.stage = {};
       $scope.svgTemplates.stage.svgs = [];
@@ -165,7 +167,7 @@
           }
         }
       }
-      $scope.confrimElement = function(name){
+      $scope.confirmElement = function(name){
         var element = $scope.getElementByName(name);
         var theString = "<"+name;
         
@@ -247,22 +249,63 @@
         svgString+=" >"+svg.content+"</svg>";
         return svgString
       }
+
+      $scope.enablePreviewClick = function(values){
+        $scope.previewClickHandler = $("#preview").click(function(e) {
+          console.log("Smarty Spotted Dog",$scope.clickIndex%values.length);
+            var offset = $(this).offset();
+            $scope.lastMouseClick = [(e.clientX - offset.left),(e.clientY - offset.top)];
+            $scope.clickIndex += 1;
+            console.log("2132",$scope);
+            values[$scope.clickIndex%values.length] = $scope.lastMouseClick;
+            $scope.makeSvgPreview();
+            $scope.$apply();
+          });
+          
+      }
+      
       $scope.addElementPreview = function(name){
         var element = $scope.getElementByName(name);
+        console.log(element);
         var theString = "<"+name;
-          for (var i = element.tags.length - 1; i >= 0; i--) {
-            var tags = element.tags[i];
-              for (var ii = tags.length - 1; ii >= 0; ii--) {
-                var attribute = element.tags[i];
-                theString += " "+attribute.var+"='"+attribute.value+"'";
+
+        for (var i = Object.keys(element.tags).length - 1; i >= 0; i--) {
+          var inputType = element.tags[Object.keys(element.tags)[i]];
+          console.log("inputType",inputType)
+          for (var ii = inputType.attributes.length - 1; ii >= 0; ii--) {
+            var attribute = inputType.attributes[ii];
+            if( attribute.var !== undefined || attribute.value !== undefined  )
+            {
+              theString += " "+attribute.var+"='"+attribute.value+"'";              
+            }else{
+              for (var iii = attribute.values.length - 1; iii >= 0; iii--) {
+                var values = attribute.values[iii];
+                var vars = attribute.vars[iii];
+                for (var iiii = 0; iiii < values.length; iiii++) {
+                  var value = values[iiii];
+                  var variable = vars[iiii];
+                  theString += " "+ variable + "='" + value+"'";
+                  console.log(theString)
+                }
               }
-              if(element.autoCloseTag === true){            
-                 theString +="/>";
-              }else{
-                 theString +="></"+name+">";
-              }
+            }
           }
           
+          if(inputType.stopRenderIfChanged === true){
+            console.log(element.globalVars);
+            for (var c = element.globalVars.length - 1; c >= 0; c--) {
+                var attribute = element.globalVars[c];
+                theString += " "+attribute.var+"='"+attribute.value+"'";
+            } 
+            break;
+          }
+        }
+
+        if(element.autoCloseTag === true){            
+           theString +="/>";
+        }else{
+           theString +="></"+name+">";
+        }
          
           $scope.contentElementPreview = theString;
       }
@@ -275,7 +318,7 @@
         }
         $scope.addElementPreview($scope.addElementDialog.elements[$scope.addElementDialog.selected].name);
         svgString+=" >"+$scope.selected.stage.svgs[$scope.selected.svg].content+$scope.contentElementPreview+"</svg>";
-        console.log("embarrassed Yellow-banded Dart frog",$scope);
+        // console.log("embarrassed Yellow-banded Dart frog",svgString);
         $scope.contentPreview = svgString;
       }
 
