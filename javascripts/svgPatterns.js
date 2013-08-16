@@ -121,7 +121,7 @@
       
       $http({"method":"GET","url":"./static/elements.json"}).success(function(response){
       
-      $scope.addElementDialog.elements = response;
+        $scope.addElementDialog.elements = response;
       
       });
       $http({"method":"GET","url":"./static/stages.json"}).success(function(response){
@@ -167,25 +167,7 @@
           }
         }
       }
-      $scope.confirmElement = function(name){
-        var element = $scope.getElementByName(name);
-        var theString = "<"+name;
-        
-          for (var i = element.tags.length - 1; i >= 0; i--) {
-            var attribute = element.attributes[i];
-            theString += " "+attribute.var+"='"+attribute.value+"'";
-          }
-          
-          if(element.autoCloseTag === true){            
-             theString +="/>";
-          }else{
-             theString +="></"+name+">";
-          }
-          $scope.selected.stage.svgs[$scope.selected.svg].content += theString;
-          // console.log(theString);
-          $('#addElement').foundation('reveal', 'close');
-      }
-      
+     
       $scope.clearElement = function(name){
         console.log($scope)
       }
@@ -263,15 +245,60 @@
           });
           
       }
+      $scope.confirmElement = function(name){
+        var element = $scope.getElementByName(name);
+        console.log(element);
+        var theString = "<"+name;
+        for (var i = Object.keys(element.tags).length - 1; i >= 0; i--) {
+          var inputType = element.tags[Object.keys(element.tags)[i]];
+          console.log("inputType",inputType)
+          for (var ii = inputType.attributes.length - 1; ii >= 0; ii--) {
+            var attribute = inputType.attributes[ii];
+            if( attribute.var !== undefined || attribute.value !== undefined  )
+            {
+              theString += " "+attribute.var+"='"+attribute.value+"'";              
+            }else{
+              for (var iii = attribute.values.length - 1; iii >= 0; iii--) {
+                var values = attribute.values[iii];
+                var vars = attribute.vars[iii];
+                for (var iiii = 0; iiii < values.length; iiii++) {
+                  var value = values[iiii];
+                  var variable = vars[iiii];
+                  theString += " "+ variable + "='" + value+"'";
+                  console.log(theString)
+                }
+              }
+              
+            }
+          }
+        
+        if(inputType.stopRenderIfChanged === true){
+          console.log(element.globalVars);
+          for (var c = element.globalVars.length - 1; c >= 0; c--) {
+              var attribute = element.globalVars[c];
+              theString += " "+attribute.var+"='"+attribute.value+"'";
+          } 
+          break;
+        }
+          
+        }
+          if(element.autoCloseTag === true){            
+             theString +="/>";
+          }else{
+             theString +="></"+name+">";
+          }
+          $scope.selected.stage.svgs[$scope.selected.svg].content += theString;
+           console.log(theString);
+          $('#addElement').foundation('reveal', 'close');
+      }
       
       $scope.addElementPreview = function(name){
         var element = $scope.getElementByName(name);
-        console.log(element);
+
         var theString = "<"+name;
 
         for (var i = Object.keys(element.tags).length - 1; i >= 0; i--) {
           var inputType = element.tags[Object.keys(element.tags)[i]];
-          console.log("inputType",inputType)
           for (var ii = inputType.attributes.length - 1; ii >= 0; ii--) {
             var attribute = inputType.attributes[ii];
             if( attribute.var !== undefined || attribute.value !== undefined  )
@@ -326,8 +353,6 @@
         $(document).foundation('section', 'reflow');
       });
       $scope.setActiveAddElementTool = function(index){
-        console.log(index);
-        console.log("contentPreview",$scope.contentPreview);
         $scope.addElementDialog.selected = index;
         $scope.makeSvgPreview();
       };
