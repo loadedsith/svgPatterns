@@ -1,0 +1,33 @@
+<div ng-include src="template.url"></div>
+<div class="row">
+  <div id="tools" class="panel large-2 columns" ng-cloak>
+    <ul >
+			<li ng-repeat="tool in tools"  ng-animate=" 'animate' ">
+        <a ng-click="{{tool.function}}()"><span class="button secondary ngCloak"  ng-bind="tool.name"></span></a>
+      </li>
+    </ul>
+	</div>
+	<div id="stages" class="large-10 columns" ng-model="stages" ng-cloak >
+    <h4>Stages</h4>
+  	<div class="row">
+  		<div class="large-12 columns">
+        <ul class="small-block-grid-2" ng-cloak ng-show="showStages">
+          <li ng-repeat="stage in stages track by $index" ng-cloak class="stage"  ng-animate=" 'animate' ">
+            <div style="padding:15px;border-radius:15px;cursor:pointer;background-color: {{stage.backgroundColor}};color: {{stage.color}};{{stage.css}};">
+            <span class="removeStage alert small button round" ng-click="removeStage($index)">&times;</span>
+              <div ng-click="selectStage($index)" id="stage{{$index}}" style="{{stage.css}}" class="card">
+                <p style="{{stage.name.css}}" ng-bind="($index+1)+': '+ stage.name.text"></p>
+              <span ng-bind="stage.color"></span>/<span ng-bind="stage.backgroundColor"></span>
+              <div class="svgList">
+                <section ng-repeat="svg in stage.svgs" style="{{stage.name.css}}" ng-bind="                   (svg.name.text||$index+1)+': '+svg.width+'x'+svg.height" ng-animate=" 'animate' ">
+                </section>
+              </div>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <span ng-bind="stages.length"></span>
+  </div>
+</div>

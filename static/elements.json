@@ -15,9 +15,7 @@
           {"var":"x1","name":"x1","type":"text","value":15,"default":15},
           {"var":"y1","name":"y1","type":"text","value":15,"default":15},
           {"var":"x2","name":"x2","type":"text","value":45,"default":45},
-          {"var":"y2","name":"y2","type":"text","value":45,"default":45},
-          {"var":"stroke","name":"Stroke","type":"text","value":"Black"},
-          {"var":"stroke-width","name":"Stroke Width","type":"text","value":3}
+          {"var":"y2","name":"y2","type":"text","value":45,"default":45}
         ],
         "autoClose":true
       },

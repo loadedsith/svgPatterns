@@ -8,128 +8,21 @@
   <meta name="viewport" content="width=device-width" />
   <title>SVG Patterns</title>
   <link rel="stylesheet" href="stylesheets/app.css" />
+  <link href='http://fonts.googleapis.com/css?family=Port+Lligat+Slab' rel='stylesheet' type='text/css'>
 
   <script src="javascripts/vendor/custom.modernizr.js"></script>
 
 </head>
-<body ng-app="SVGPatterns" ng-controller="AppController">
+<body ng-app="SVGPatterns" >
 	<div class="row">
-		<div class="large-12 columns">
-			<h2>SVG Patterns</h2>
-			<p>This is version .3</p>
-			<hr />
+		<div class="small-6 small-centered large-centered columns">
+			<h2 class="subheader center">SVG Patterns<small>.3</small></h2>
+
 		</div>
 	</div>
-	<div id="selectedStage" class="row" ng-cloak ng-show="showSelectedStage">
-		<div id="svgTools" class="panel large-3 columns">
-			<h4>SVG Tools</h4>
-      <ul>
-  			<li ng-repeat="tool in SVGTools"  ng-animate=" 'animate' ">
-          <a href="#" ng-click="{{tool.function}}()"><span class="button secondary ngCloak" ng-bind="tool.name" ></span></a>
-        </li>
-      </ul>
-		</div>
-    
-		<div class="large-9 columns"style="color: {{selected.stage.color}}; background-color: {{selected.stage.backgroundColor}}; {{selected.stage.css}}">
-			<h2 style="color: {{selected.stage.color}}; background-color: {{selected.stage.backgroundColor}}; {{selected.stage.css}}" ng-bind="selected.stage.index+1+':'+selected.stage.name.text"></h2>
-      <input  type="text" ng-model="selected.stage.name.text">
-      <div >
-        <div class="section-container auto" data-section="auto" >
-          <section ng-repeat="svg in selected.stage.svgs"  ng-animate="'animate'"  on-finish-render>
-            
-            <p data-section-title class="title"><a href="#page{{$index}}" ng-click="selectSvg($index)" ng-bind="svg.name.text"></a></p>
-            <div class="content" data-section-content>
-              <div class="alert small button" ng-click="removeSvg($index)">&times;</div>
-              <form ng-change="makeSvg(svg)" ng-model="svg">
-                <input type="text" ng-model="svg.name.text"></input>
-                <ul class="inline-list">
-                  <li><label for="svgWidth">Width</label><input ng-model="svg.width" id="svgWidth" type="text"></li>
-                  <li><label for="svgHeight">Height</label><input ng-model="svg.height" id="svgHeight" type="text"></li>
-                  <li><label for="svgViewBox">ViewBox</label><input ng-model="svg.viewBox" id="svgViewBox" type="text"></li>
-                </ul>
-                <label for="svgContent">SVG</label><textarea ng-model="svg.content" id="svgContent" type="text"></textarea>
-              </form>
-              <pre ng-bind="svg.content"></pre>
-              <div ng-bind-html-unsafe="makeSvg(svg)"></div>
-            </div>
-          </section>
-        </div>
-      </div>
-    </div>
-  </div>
- 
-  <div class="row">
-    <div id="tools" class="panel large-2 columns" ng-cloak>
-      <ul >
-  			<li ng-repeat="tool in tools"  ng-animate=" 'animate' ">
-          <a href="#" ng-click="{{tool.function}}()"><span class="button secondary ngCloak"  ng-bind="tool.name"></span></a>
-        </li>
-      </ul>
-		</div>
-		<div id="stages" class="large-10 columns" ng-model="stages" ng-cloak >
-      <h4>Stages</h4>
-    	<div class="row">
-    		<div class="large-12 columns">
-          <ul class="small-block-grid-2" ng-cloak ng-show="showStages">
-            <li ng-repeat="stage in stages track by $index" ng-cloak class="stage"  ng-animate=" 'animate' ">
-              <div style="padding:15px;border-radius:15px;cursor:pointer;background-color: {{stage.backgroundColor}};color: {{stage.color}};{{stage.css}};">
-              <span class="removeStage alert small button round" ng-click="removeStage($index)">&times;</span>
-                <div ng-click="selectStage($index)" id="stage{{$index}}" style="{{stage.css}}" class="card">
-                  <p style="{{stage.name.css}}" ng-bind="($index+1)+': '+ stage.name.text"></p>
-                <span ng-bind="stage.color"></span>/<span ng-bind="stage.backgroundColor"></span>
-                <div class="svgList">
-                  <section ng-repeat="svg in stage.svgs" style="{{stage.name.css}}" ng-bind="                   (svg.name.text||$index+1)+': '+svg.width+'x'+svg.height" ng-animate=" 'animate' ">
-                  </section>
-                </div>
-                </div>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </div>
-      <span ng-bind="stages.length"></span>
-    </div>
-	</div>
-  
-  <div id="addElement" class="reveal-modal"  ng-model="addElementDialog">
-    <h2>Add Element</h2> 
-    <div id="preview" class="preview">
-      <div ng-bind-html-unsafe="contentPreview"></div>
-    </div>
-    <div class="section-container auto" data-section>
-      <section ng-repeat="element in addElementDialog.elements" ng-class="{active:isAddElementActive($index)}" >
-        <p class="title" data-section-title><a href="#{{element.name}}" ng-click="setActiveAddElementTool($index)" ng-bind="element.name"></a></p>
-        <div class="content" data-section-content>
-          <form id="addElement{{element.name}}" ng-chage="makeSvgPreview()">
-            <ul class="inline-list">
-              
-              <li ng-repeat="attribute in element.globalVars" >
-                <label for="addElement{{attribute.var}}" ng-bind="attribute.name"></label><input type="{{attribute.type}}" ng-model="attribute.value" value="{{attribute.value}}" ng-change="makeSvgPreview()"/>
-              </li>
-              
-              <li ng-repeat="attribute in element.tags.text.attributes" >
-                <label for="addElement{{attribute.var}}" ng-bind="attribute.name"></label><input type="{{attribute.type}}" ng-model="attribute.value" value="{{attribute.value}}" ng-change="makeSvgPreview()"/>
-              </li>
-              <li ng-repeat="attribute in element.tags.textarea.attributes">
-                <label for="addElement{{attribute.var}}" ng-bind="attribute.name"></label><textarea ng-model="attribute.value" ng-change="makeSvgPreview()"></textarea>
-              </li>
-              <li ng-repeat="attribute in element.tags.clickable.attributes" ng-init="enablePreviewClick(attribute.values)">
-                <label for="addElement{{attribute.name}}" ng-bind="attribute.name"></label>
-                <ul >
-                  <li ng-repeat="value in attribute.values">
-                      <a ng-bind="value"></a>
-                  </li>
-                </ul>
-              </li>
-            </ul>
-            <div class="alert button" ng-click="clearElement('{{element.name}}')">Clear</div>
-            <div class="success button" ng-click="confirmElement('{{element.name}}')">Go</div>
-          </form>
-        </div>
-      </section>
-    </div>
-    <a class="close-reveal-modal">&#215;</a>
-  </div>
+	<hr />
+  <ng-view></ng-view>
+
 
 
   <script>

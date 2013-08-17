@@ -1,8 +1,13 @@
+/*jshint undef: true, unused: true */
+/*global $:false */
+/*global document:false */
+/*global angular:false */
+/*global console:false */
+
     $(document).ready(function() {
       $(document).foundation('section', 'reflow');
       $(document).foundation();
       $('#addElement').on('opened', function () {
-        console.log("Orange Man of War bird")
         $(document).foundation('section', 'reflow');
       });
       
@@ -10,7 +15,7 @@
 
     function clone(obj) {
         // Handle the 3 simple types, and null or undefined
-        if (null == obj || "object" != typeof obj) return obj;
+        if (null === obj || "object" != typeof obj) return obj;
 
         // Handle Date
         if (obj instanceof Date) {
@@ -21,33 +26,38 @@
 
         // Handle Array
         if (obj instanceof Array) {
-            var copy = [];
+            var copyArray = [];
             for (var i = 0, len = obj.length; i < len; i++) {
-                copy[i] = clone(obj[i]);
+                copyArray[i] = clone(obj[i]);
             }
-            return copy;
+            return copyArray;
         }
 
         // Handle Object
         if (obj instanceof Object) {
-            var copy = {};
+            var copyObject = {};
             for (var attr in obj) {
-                if (obj.hasOwnProperty(attr)) copy[attr] = clone(obj[attr]);
+                if (obj.hasOwnProperty(attr)) copyObject[attr] = clone(obj[attr]);
             }
-            return copy;
+            return copyObject;
         }
 
         throw new Error("Unable to copy obj! Its type isn't supported.");
     }
     
-    
     var SVGPatterns = angular.module('SVGPatterns', ['ngSanitize']);
+    SVGPatterns.config(function($routeProvider, $locationProvider){
+      $locationProvider.html5Mode(true);
+      $routeProvider.
+        when('/', {templateUrl: 'partials/stages.html',   controller: AppController});
+    });
+  
     SVGPatterns.directive('integer', function(){
         return {
             require: 'ngModel',
             link: function(scope, ele, attr, ctrl){
                 ctrl.$parsers.unshift(function(viewValue){
-                    return parseInt(viewValue);
+                    return parseInt(viewValue, 10);
                 });
             }
         };
@@ -55,14 +65,14 @@
     SVGPatterns.directive('onFinishRender', function ($timeout) {
         return {
             restrict: 'A',
-            link: function (scope, element, attr) {
+            link: function (scope) {
                 if (scope.$last === true) {
                     $timeout(function () {
                         scope.$emit('ngRepeatFinished');
                     });
                 }
             }
-        }
+        };
     });
     SVGPatterns.directive('compile', function($compile) {
         return function(scope, element, attrs) {
@@ -81,16 +91,14 @@
               }
           );
         };
-      })
-    SVGPatterns.config(function ($routeProvider) {
-      $routeProvider
-        .when('/page/:slug', {templateUrl: 'partials/page.html', controller: 'RouteController'})
-        .otherwise({redirectTo: '/page/home'});
-    });
+      });
+  
     
     function AppController ($scope, $rootScope, $http) {
       // Load pages on startup
-      console.log("Smarty Brown Bear")
+      console.log("Smarty Brown Bear");
+      $scope.template = { name: 'stage.html', url: 'partials/stage.html'};
+      
       // $http.get('pages.json').success(function (data) {
       //   $rootScope.pages = data;
       // });
@@ -99,6 +107,10 @@
       // $scope.$on('routeLoaded', function (event, args) {
       //   $scope.slug = args.slug;
       // });
+      $scope.reflowModal = function () {
+        console.log("pretty bear")
+        $('#addElement').foundation("reveal");
+      };
       $scope.selected = {};
       $scope.selected.svg = 0;
       
@@ -107,7 +119,7 @@
       $scope.svgTemplates = {};
       $scope.svgTemplates.stage = {};
       $scope.svgTemplates.stage.svgs = [];
-      $scope.svgTemplates.stage.svgs.default = ({"name":{"text":"defaultSvg"},"width":"400px", "height":"400px", "content":""});
+      $scope.svgTemplates.stage.svgs.defaultValue = ({"name":{"text":"defaultSvg"},"width":"400px", "height":"400px", "content":""});
       $scope.svgTemplates.stage.name = {};
       $scope.svgTemplates.stage.name.text = "Default Name";
       $scope.svgTemplates.stage.name.css = "text-shadow:0px 0px 7px #000, 0px 0px 13px #fff";
@@ -157,20 +169,18 @@
       
       $scope.isAddElementActive = function(index){
         return index===$scope.addElementDialog.selected;
-      }
+      };
       $scope.getElementByName = function(name){
-        var element = {};
         for (var i = $scope.addElementDialog.elements.length - 1; i >= 0; i--) {
           if(name === $scope.addElementDialog.elements[i].name){
-            return $scope.addElementDialog.elements[i];
-            
+            return $scope.addElementDialog.elements[i];            
           }
         }
-      }
+      };
      
       $scope.clearElement = function(name){
-        console.log($scope)
-      }
+        console.log($scope,name);
+      };
      
     
       $scope.showAddElementDialog = false;
@@ -180,57 +190,56 @@
         $scope.makeSvgPreview();
         $('#addElement').foundation('reveal', 'open');
         
-      }  
+      };
       
       $scope.addStage = function(){
         $scope.stages.push(clone($scope.svgTemplates.stage));
         var index = $scope.stages.length-1;
         $scope.stages[index].backgroundColor = $scope.backgroundColors[index];
         $scope.stages[index].color = $scope.colors[index];
-      }
+      };
       $scope.addSvg = function(){
-        $scope.selected.stage.svgs.push(clone($scope.svgTemplates.stage.svgs.default));
+        $scope.selected.stage.svgs.push(clone($scope.svgTemplates.stage.svgs.defaultValue));
         $(document).foundation('section', 'reflow');
-      }      
+      };     
    
       $scope.isSvgActive = function(index) {
         
            return index === $scope.selected.svg.index;
-       }
+       };
       $scope.removeSvg = function(index){
          $scope.selected.stage.svgs.splice(index,1);
-      }
+      };
       $scope.removeStage = function(index){
          $scope.stages.splice(index,1);
-      }
+      };
       $scope.callMe = function(input){
         console.log("Call Me: ",input);
-      }
+      };
       $scope.mod = function(modThis, byThis){
         return modThis%byThis;
-      }
+      };
       $scope.selectSvg = function(index){
         // $scope.selected.svg = $scope.selected.stage.svgs[index];
         // $scope.selected.svg.index = index;
         $scope.selected.svg = index;
-      }
+      };
       $scope.selectStage = function(index){
         $scope.selected.stage = $scope.stages[index];
         $scope.selected.stage.index = index;
         $scope.showSelectedStage = true;
-      }
+      };
       $scope.showAddLineDialog = false;
       $scope.showStages = true;
       $scope.makeSvg = function(svg){
-        var svgString = "<svg style='border:1px solid" + $scope.colors[ $scope.mod( $scope.selected.stage.index,$scope.colors.length)] 
-                            + "' width='" + svg.width + "' height='"
-                            + svg.height + "'";
-        if(svg.viewBox!=""){
+        var svgString = "<svg style='border:1px solid" + $scope.colors[ $scope.mod( $scope.selected.stage.index,$scope.colors.length)] +
+                             "' width='" + svg.width + "' height='" + svg.height + "'";
+        if(svg.viewBox !== ""){
           svgString += "viewBox='" + svg.viewBox + "'";
         }
         svgString+=" >"+svg.content+"</svg>";
-        return svgString
-      }
+        return svgString;
+      };
 
       $scope.enablePreviewClick = function(values){
         $scope.previewClickHandler = $("#preview").click(function(e) {
@@ -244,14 +253,14 @@
             $scope.$apply();
           });
           
-      }
+      };
       $scope.confirmElement = function(name){
         var element = $scope.getElementByName(name);
         console.log(element);
         var theString = "<"+name;
         for (var i = Object.keys(element.tags).length - 1; i >= 0; i--) {
           var inputType = element.tags[Object.keys(element.tags)[i]];
-          console.log("inputType",inputType)
+          console.log("inputType",inputType);
           for (var ii = inputType.attributes.length - 1; ii >= 0; ii--) {
             var attribute = inputType.attributes[ii];
             if( attribute.var !== undefined || attribute.value !== undefined  )
@@ -290,7 +299,7 @@
           $scope.selected.stage.svgs[$scope.selected.svg].content += theString;
            console.log(theString);
           $('#addElement').foundation('reveal', 'close');
-      }
+      };
       
       $scope.addElementPreview = function(name){
         var element = $scope.getElementByName(name);
@@ -335,7 +344,7 @@
         }
          
           $scope.contentElementPreview = theString;
-      }
+      };
       $scope.makeSvgPreview = function(){
         var svg = $scope.selected.stage.svgs[$scope.selected.svg];
         var svgString = "<svg style='border:1px solid" + $scope.colors[ $scope.mod( $scope.selected.stage.index,$scope.colors.length)] 
@@ -347,6 +356,7 @@
         svgString+=" >"+$scope.selected.stage.svgs[$scope.selected.svg].content+$scope.contentElementPreview+"</svg>";
         // console.log("embarrassed Yellow-banded Dart frog",svgString);
         $scope.contentPreview = svgString;
+        
       }
 
       $scope.$on('ngRepeatFinished', function(ngRepeatFinishedEvent) {
@@ -356,7 +366,7 @@
         $scope.addElementDialog.selected = index;
         $scope.makeSvgPreview();
       };
-    }
+    };
     
     function RouteController ($scope, $rootScope, $routeParams) {
       // Getting the slug from $routeParams
