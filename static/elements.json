@@ -3,22 +3,15 @@
     "name":"line",
     "autoCloseTag":true,
     "globalVars":[
-      {"var":"stroke","name":"Stroke","type":"text","value":"Black"},
-      {"var":"stroke-width","name":"Stroke Width","type":"text","value":3}
+      {"var":"stroke","name":"Stroke","type":"color","value":"#CE3A3D"},
+      {"var":"stroke-width","name":"Stroke Width","type":"text","value":3},
+      {"var":"stroke-dasharray","selectBox":true,"name":"Stroke Dash Array","type":"select","value":"","values":
+        ["0","20,10,5,5,5,10", "10,10", "0,20%", "0,10%"]
+      }
     ],
     "tags":
     {
-      "text":
-      {
-        "attributes": 
-        [
-          {"var":"x1","name":"x1","type":"text","value":15,"default":15},
-          {"var":"y1","name":"y1","type":"text","value":15,"default":15},
-          {"var":"x2","name":"x2","type":"text","value":45,"default":45},
-          {"var":"y2","name":"y2","type":"text","value":45,"default":45}
-        ],
-        "autoClose":true
-      },
+     
       "clickable":{
         "attributes":
         [
@@ -38,21 +31,34 @@
   {
     "name":"ellipse",
     "autoCloseTag":true,
+    "globalVars":[
+      {"var":"stroke","name":"Stroke","type":"color","value":"#210911"},
+      {"var":"stroke-dasharray","selectBox":true,"name":"Stroke Dash Array","type":"select","value":"","values":
+        ["0","20,10,5,5,5,10", "10,10", "0,20%", "0,10%"]
+      },
+      {"var":"fill","name":"Fill","type":"color","value":"#CE3A3D"},
+      {"var":"stroke-width","name":"Stroke Width","type":"text","value":3},
+      {"var":"rx","name":"Width","type":"text","value":45,"default":45},
+      {"var":"ry","name":"Height","type":"text","value":45,"default":45}
+    ],
     "tags":
     {
-      "text":{
-          "attributes": [
-            {"var":"cx","name":"cx","type":"text","value":15,"default":15},
-            {"var":"cy","name":"cy","type":"text","value":15,"default":15},
-            {"var":"rx","name":"rx","type":"text","value":45,"default":45},
-            {"var":"ry","name":"ry","type":"text","value":45,"default":45},
-            {"var":"fill","name":"fill","type":"text","value":"Blue"},
-            {"var":"stroke","name":"Stroke","type":"text","value":"Black"},
-            {"var":"stroke-width","name":"Stroke Width","type":"text","value":3}
-          ],
-          "autoClose":true
-        }
+      
+      "clickable":{
+        "attributes":
+        [
+          {
+            "name":"cx, cy, rx, ry",
+            "id":"ClickableEllipse",
+            "vars":[["cx","cy"]],
+            "values":[["15","15"]],
+            "defaults":[["15","15"]]
+          }
+        ],
+        "autoClose":true,
+        "stopRenderIfChanged":true
       }
+    }
   },
   {
     "name":"path",
@@ -60,6 +66,7 @@
     "tags":
     {
       "textarea":{
+        
         "attributes": [
           {
             "var":"d","name":"data","type":"textarea","value":"M150 0 L75 200 L225 200 Z",
@@ -87,8 +94,8 @@
       }, 
       "text":{
         "attributes": [
-          {"var":"fill","name":"fill","type":"text","value":"Blue"},
-          {"var":"stroke","name":"Stroke","type":"text","value":"Black"},
+          {"var":"fill","name":"fill","type":"color","value":"#210911"},
+          {"var":"stroke","name":"Stroke","type":"color","value":"#CE3A3D"},
           {"var":"stroke-width","name":"Stroke Width","type":"text","value":3}
         ]
       }

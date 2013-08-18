@@ -3,8 +3,8 @@
 	<div id="svgTools" class="panel large-3 columns">
 		<h4>SVG Tools</h4>
     <ul>
-			<li ng-repeat="tool in SVGTools"  ng-animate=" 'animate' ">
-        <a href="#" ng-click="{{tool.function}}()"><span class="button secondary ngCloak" ng-bind="tool.name" ></span></a>
+			<li ng-repeat="tool in SVGTools"  ng-animate=" 'animate' "   >
+        <a  ng-click="{{tool.function}}();"  ><span class="button secondary ngCloak" ng-bind="tool.name" ></span></a>
       </li>
     </ul>
 	</div>
@@ -17,15 +17,29 @@
     </div>
     <div class="row">
       <div class="small-12 columns">
-        <label for="stageSVG{{selected.stage.name.text}}" class="prefixLabel">Stage Name</label><input class="prefixInput" id="stageSVG{{selected.stage.name.text}}" type="text" ng-model="selected.stage.name.text">
+        <label for="stageSVG{{selected.stage.name.text}}" class="prefixLabel">Stage Name</label>
+        <input class="prefixInput" id="stageSVG{{selected.stage.name.text}}" type="text" ng-model="selected.stage.name.text">
+      </div>
+    </div>
+    <div class="row">
+      <div class="small-6 columns">
+        <label for="stageSVG{{selected.stage.backgroundColor}}" class="prefixLabel"><span ng-bind="selected.stage.backgroundColor"></span></label>
+        <input class="prefixInput" id="stageSVG{{selected.stage.backgroundColor}}" value="{{selected.stage.backgroundColor}}" type="color" ng-model="selected.stage.backgroundColor">
+      </div>
+      <div class="small-6 columns">
+        <label for="stageSVG{{selected.stage.color}}" class="prefixLabel"><span ng-bind="selected.stage.color"></span></label>
+        <input class="prefixInput" id="stageSVG{{selected.stage.color}}" value="{{selected.stage.color}}" type="color" ng-model="selected.stage.color">
       </div>
     </div>
     <div >
       <div class="section-container auto" data-section="auto" >
-        <section ng-repeat="svg in selected.stage.svgs"  ng-animate="'animate'"  on-finish-render>
-          
-          <p data-section-title class="title"><a ng-click="selectSvg($index)" ng-bind="svg.name.text"></a></p>
+        <section class=" svgs" ng-repeat="svg in selected.stage.svgs"  ng-animate="'animate'" on-finish-render>
+          <p data-section-title class="title">
+            <a ng-click="selectSvg($index)" >{{svg.name.text}}</a>
+          </p>
           <div class="content" data-section-content>
+            <a class="alert small button" ng-click="removeSvg($index)">&times;</a>
+            <div ng-style="{'width':'svg.width','height':'svg.height'}" ng-bind-html-unsafe="makeSvg(svg)"></div>
             <form ng-change="makeSvg(svg)" ng-model="svg">
               <label for="previewSVG{{$index}}" class="prefixLabel">SVG Name</label><input class="previewSVG{{$index}} prefixInput" type="text" ng-model="svg.name.text"></input>
               <ul class="inline-list">
@@ -33,44 +47,71 @@
                 <li><label for="svgHeight" class="prefixLabel">Height</label><input class="prefixInput" ng-model="svg.height" id="svgHeight" type="text"></li>
                 <li><label for="svgViewBox" class="prefixLabel">ViewBox</label><input class="prefixInput" ng-model="svg.viewBox" id="svgViewBox" type="text"></li>
               </ul>
-              <label for="svgContent">SVG</label><textarea ng-model="svg.content" id="svgContent" type="text"></textarea>
+              <label for="svgContent">SVG</label><textarea rows="14" ng-model="svg.content" id="svgContent" type="text"></textarea>
             </form>
-            <div class="alert small button" ng-click="removeSvg($index)">Delete Svg</div>
-            <pre ng-bind="svg.content"></pre>
-            <div ng-style="width:{{svg.visibleWidth()}}px;height:{{svg.visibleHeight()}}px;" ng-click="clickEvent($event)" ng-bind-html-unsafe="makeSvg(svg)"></div>
+            slider
+<!--             <ul>
+              <li ng-repeat="element in addElementDialog.elements" ng-animate="'animate'" ng-class="{active:isAddElementActive($index)}">
+                <p class=""><a ng-click="setActiveAddElementTool($index)" ng-bind="element.name"></a></p>
+                <div class="" >
+                  <form id="addElement{{element.name}}" ng-chage="makeSvgPreview()">
+                    <ul class="inline-list">
+                      <li ng-repeat="attribute in element.globalVars" >
+                        <label for="addElement{{attribute.var}}" ng-bind="attribute.name"></label>
+                        <input type="{{attribute.type}}" ng-model="attribute.value" value="{{attribute.value}}" ng-change="makeSvgPreview()"/>
+                      </li>
+                      <li ng-repeat="attribute in element.tags.clickable.attributes" ng-init="enablePreviewClick(attribute.values)">
+                        <label for="addElement{{attribute.name}}" ng-bind="attribute.name"></label>
+                        <ul >
+                          <li ng-repeat="value in attribute.values">
+                            <a ng-bind="value"></a>
+                          </li>
+                        </ul>
+                      </li>
+                    </ul>
+                  </form>
+                </div>
+              </li>
+            </ul>   -->
+
           </div>
         </section>
       </div>
     </div>
   </div>
 </div>
-<div id="addElement" class="reveal-modal" ng-init="reflowModal()" ng-model="addElementDialog">
+<div id="addElement" class="reveal-modal" ng-init="sectionReflow()" ng-model="addElementDialog">
   <h2>Add Element</h2> 
   <div id="preview" class="preview" ng-click="previewClick($event)">
-    <div ng-bind-html-unsafe="contentPreview" style="width:{{visibleWidth()}}px;height:{{visibleHeight()}}px;"></div>
+    <div ng-bind-html-unsafe="contentPreview" ng-style=" { 'width' : '{{visibleWidth()}}px', 'height' : '{{visibleHeight()}}px' } "></div>
   </div>
-  <div class="section-container auto" data-section>
-    <section ng-repeat="element in addElementDialog.elements" ng-class="{active:isAddElementActive($index)}" >
-      <p class="title" data-section-title><a href="#{{element.name}}" ng-click="setActiveAddElementTool($index)" ng-bind="element.name"></a></p>
+    <div class="section-container auto" data-section="auto"> 
+    <section ng-repeat="element in addElementDialog.elements" id="thisThingy"  ng-animate="'animate'" ng-class="{active:isAddElementActive($index)}" ng-init="sectionReflow()">
+      <p class="title" data-section-title><a ng-click="setActiveAddElementTool($index)" ng-bind="element.name"></a></p>
       <div class="content" data-section-content>
         <form id="addElement{{element.name}}" ng-chage="makeSvgPreview()">
           <ul class="inline-list">
-            
             <li ng-repeat="attribute in element.globalVars" >
-              <label for="addElement{{attribute.var}}" ng-bind="attribute.name"></label><input type="{{attribute.type}}" ng-model="attribute.value" value="{{attribute.value}}" ng-change="makeSvgPreview()"/>
+              <label  for="addElement{{attribute.var}}" ng-bind="attribute.name"></label>
+              <input  type="{{attribute.type}}" ng-model="attribute.value" value="{{attribute.value}}" ng-change="makeSvgPreview()"/>
+              <!-- <slider  nfloor="100" ceiling="1000" step="50" precision="2" ng-model="attribute.value"></slider> -->
+              
+              <select ng-show="attribute.selectBox" ng-options="val for val in attribute.values" ng-model="attribute.selectedValue" ng-change="selectOptionForVar($index,attribute);makeSvgPreview()">
+              </select>
             </li>
-            
-            <li ng-repeat="attribute in element.tags.text.attributes" >
-              <label for="addElement{{attribute.var}}" ng-bind="attribute.name"></label><input type="{{attribute.type}}" ng-model="attribute.value" value="{{attribute.value}}" ng-change="makeSvgPreview()"/>
+            <li ng-repeat="attribute in element.tags.text.attributes">
+              <label for="addElement{{attribute.var}}" ng-bind="attribute.name"></label>
+              <input type="{{attribute.type}}" ng-model="attribute.value" value="{{attribute.value}}" ng-change="makeSvgPreview()"/>
             </li>
             <li ng-repeat="attribute in element.tags.textarea.attributes">
-              <label for="addElement{{attribute.var}}" ng-bind="attribute.name"></label><textarea ng-model="attribute.value" ng-change="makeSvgPreview()"></textarea>
+              <label for="addElement{{attribute.var}}" ng-bind="attribute.name"></label>
+              <textarea ng-model="attribute.value" ng-change="makeSvgPreview()"></textarea>
             </li>
             <li ng-repeat="attribute in element.tags.clickable.attributes" ng-init="enablePreviewClick(attribute.values)">
               <label for="addElement{{attribute.name}}" ng-bind="attribute.name"></label>
               <ul >
                 <li ng-repeat="value in attribute.values">
-                    <a ng-bind="value"></a>
+                  <a ng-bind="value"></a>
                 </li>
               </ul>
             </li>

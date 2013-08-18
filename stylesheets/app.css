@@ -5136,19 +5136,19 @@ a.th {
   max-width: 800px;
 }
 
-/* line 6, ../sass/_svgPatterns.scss */
+/* line 7, ../sass/_svgPatterns.scss */
 [ng\:cloak], [ng-cloak], .ng-cloak {
   display: none !important;
 }
 
-/* line 9, ../sass/_svgPatterns.scss */
+/* line 10, ../sass/_svgPatterns.scss */
 html, body {
   overflow-x: hidden;
   height: 100%;
   background-color: #80B5E3;
 }
 
-/* line 15, ../sass/_svgPatterns.scss */
+/* line 16, ../sass/_svgPatterns.scss */
 .prefixLabel {
   display: block;
   position: relative;
@@ -5171,7 +5171,7 @@ html, body {
   background: #2ba6cb;
 }
 
-/* line 20, ../sass/_svgPatterns.scss */
+/* line 21, ../sass/_svgPatterns.scss */
 input[type="text"].prefixInput {
   position: relative;
   padding-left: 0.9375em;
@@ -5180,15 +5180,12 @@ input[type="text"].prefixInput {
   float: left;
 }
 
-/* line 28, ../sass/_svgPatterns.scss */
+/* line 29, ../sass/_svgPatterns.scss */
 .stage .removeStage {
   float: right;
 }
-/* line 31, ../sass/_svgPatterns.scss */
+/* line 32, ../sass/_svgPatterns.scss */
 .stage .svgList {
-  -webkit-box-shadow: 0px 0px 7px black, 0px 0px 13px white;
-  -moz-box-shadow: 0px 0px 7px black, 0px 0px 13px white;
-  box-shadow: 0px 0px 7px black, 0px 0px 13px white;
   height: 4em;
   overflow: auto;
 }
@@ -5216,18 +5213,22 @@ svg {
 }
 
 /* line 61, ../sass/_svgPatterns.scss */
+.svgs .title {
+  padding-right: 12px;
+}
+/* line 63, ../sass/_svgPatterns.scss */
+.svgs .title .button {
+  display: block !important;
+  padding: 4px;
+  width: 1em !important;
+}
+
+/* line 72, ../sass/_svgPatterns.scss */
 #tools ul {
   list-style: none;
 }
 
-/* line 67, ../sass/_svgPatterns.scss */
-#addElement .preview {
-  -webkit-box-shadow: 0px 0px 5px #333333;
-  -moz-box-shadow: 0px 0px 5px #333333;
-  box-shadow: 0px 0px 5px #333333;
-}
-
-/* line 72, ../sass/_svgPatterns.scss */
+/* line 83, ../sass/_svgPatterns.scss */
 .animate-enter {
   -webkit-transition: 300ms linear all;
   -moz-transition: 300ms linear all;
@@ -5236,7 +5237,7 @@ svg {
   opacity: 0;
 }
 
-/* line 77, ../sass/_svgPatterns.scss */
+/* line 88, ../sass/_svgPatterns.scss */
 .animate-enter.animate-enter-active {
   opacity: 1;
 }

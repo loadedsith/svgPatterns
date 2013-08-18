@@ -3,8 +3,8 @@
     "name":{
       "text" : "Mozilla Example Svg"
     },
-    "color":"White",
-    "backgroundColor":"Black",
+    "color":"#CE3A3D",
+    "backgroundColor":"#210911",
     "svgs":[
       {
         "name":{

@@ -7,9 +7,7 @@
     $(document).ready(function() {
       $(document).foundation('section', 'reflow');
       $(document).foundation();
-      $('#addElement').on('opened', function () {
-        $(document).foundation('section', 'reflow');
-      });
+
       
     });
 
@@ -45,7 +43,7 @@
         throw new Error("Unable to copy obj! Its type isn't supported.");
     }
     
-    var SVGPatterns = angular.module('SVGPatterns', ['ngSanitize']);
+    var SVGPatterns = angular.module('SVGPatterns', ['ngSanitize','localStorage','uiSlider']);
     SVGPatterns.config(function($routeProvider, $locationProvider){
       $locationProvider.html5Mode(true);
       $routeProvider.
@@ -94,9 +92,9 @@
       });
   
     
-    function AppController ($scope, $rootScope, $http) {
+    function AppController ($scope, $rootScope, $http, $store) {
       // Load pages on startup
-      console.log("Smarty Brown Bear");
+      // console.log("Smarty Brown Bear");
       $scope.template = { name: 'stage.html', url: 'partials/stage.html'};
       
       // $http.get('pages.json').success(function (data) {
@@ -124,35 +122,39 @@
       $scope.svgTemplates.stage.name.text = "Default Name";
       $scope.svgTemplates.stage.name.css = "text-shadow:0px 0px 7px #000, 0px 0px 13px #fff";
       $scope.svgTemplates.stage.css = "text-shadow: 0px 0px 7px #000,0px 0px 13px #fff";
-      $scope.backgroundColors = ["AliceBlue","AntiqueWhite","Aqua","Aquamarine","Azure","Beige","Bisque","Black","BlanchedAlmond","Blue","BlueViolet","Brown","BurlyWood","CadetBlue","Chartreuse","Chocolate","Coral","CornflowerBlue","Cornsilk","Crimson","Cyan","DarkBlue","DarkCyan","DarkGoldenRod","DarkGray","DarkGreen","DarkKhaki","DarkMagenta","DarkOliveGreen","DarkOrange","DarkOrchid","DarkRed","DarkSalmon","DarkSeaGreen","DarkSlateBlue","DarkSlateGray","DarkTurquoise","DarkViolet","DeepPink","DeepSkyBlue","DimGray","DodgerBlue","FireBrick","FloralWhite","ForestGreen","Fuchsia","Gainsboro","GhostWhite","Gold","GoldenRod","Gray","Green","GreenYellow","HoneyDew","HotPink","IndianRed","Indigo","Ivory","Khaki","Lavender","LavenderBlush","LawnGreen","LemonChiffon","LightBlue","LightCoral","LightCyan","LightGoldenRodYellow","LightGray","LightGreen","LightPink","LightSalmon","LightSeaGreen","LightSkyBlue","LightSlateGray","LightSteelBlue","LightYellow","Lime","LimeGreen","Linen","Magenta","Maroon","MediumAquaMarine","MediumBlue","MediumOrchid","MediumPurple","MediumSeaGreen","MediumSlateBlue","MediumSpringGreen","MediumTurquoise","MediumVioletRed","MidnightBlue","MintCream","MistyRose","Moccasin","NavajoWhite","Navy","OldLace","Olive","OliveDrab","Orange","OrangeRed","Orchid","PaleGoldenRod","PaleGreen","PaleTurquoise","PaleVioletRed","PapayaWhip","PeachPuff","Peru","Pink","Plum","PowderBlue","Purple","Red","RosyBrown","RoyalBlue","SaddleBrown","Salmon","SandyBrown","SeaGreen","SeaShell","Sienna","Silver","SkyBlue","SlateBlue","SlateGray","Snow","SpringGreen","SteelBlue","Tan","Teal","Thistle","Tomato","Turquoise","Violet","Wheat","White","WhiteSmoke","Yellow","YellowGreen"]; 
-      $scope.colors = ["AliceBlue","AntiqueWhite","Aqua","Aquamarine","Azure","Beige","Bisque","Black","BlanchedAlmond","Blue","BlueViolet","Brown","BurlyWood","CadetBlue","Chartreuse","Chocolate","Coral","CornflowerBlue","Cornsilk","Crimson","Cyan","DarkBlue","DarkCyan","DarkGoldenRod","DarkGray","DarkGreen","DarkKhaki","DarkMagenta","DarkOliveGreen","DarkOrange","DarkOrchid","DarkRed","DarkSalmon","DarkSeaGreen","DarkSlateBlue","DarkSlateGray","DarkTurquoise","DarkViolet","DeepPink","DeepSkyBlue","DimGray","DodgerBlue","FireBrick","FloralWhite","ForestGreen","Fuchsia","Gainsboro","GhostWhite","Gold","GoldenRod","Gray","Green","GreenYellow","HoneyDew","HotPink","IndianRed","Indigo","Ivory","Khaki","Lavender","LavenderBlush","LawnGreen","LemonChiffon","LightBlue","LightCoral","LightCyan","LightGoldenRodYellow","LightGray","LightGreen","LightPink","LightSalmon","LightSeaGreen","LightSkyBlue","LightSlateGray","LightSteelBlue","LightYellow","Lime","LimeGreen","Linen","Magenta","Maroon","MediumAquaMarine","MediumBlue","MediumOrchid","MediumPurple","MediumSeaGreen","MediumSlateBlue","MediumSpringGreen","MediumTurquoise","MediumVioletRed","MidnightBlue","MintCream","MistyRose","Moccasin","NavajoWhite","Navy","OldLace","Olive","OliveDrab","Orange","OrangeRed","Orchid","PaleGoldenRod","PaleGreen","PaleTurquoise","PaleVioletRed","PapayaWhip","PeachPuff","Peru","Pink","Plum","PowderBlue","Purple","Red","RosyBrown","RoyalBlue","SaddleBrown","Salmon","SandyBrown","SeaGreen","SeaShell","Sienna","Silver","SkyBlue","SlateBlue","SlateGray","Snow","SpringGreen","SteelBlue","Tan","Teal","Thistle","Tomato","Turquoise","Violet","Wheat","White","WhiteSmoke","Yellow","YellowGreen"].reverse(); 
-      // $scope.colors.reverse(); 
+      $scope.backgroundColors = ["#58994C","#58994C","#999543","#999543"];
+      $scope.colors = ["#FBFBFB","#FBFBFB","#304B21","#304B21"]; 
 
       $scope.stages = [];
       $scope.stages.push(clone($scope.svgTemplates.stage));
       
-      $http({"method":"GET","url":"./static/elements.json"}).success(function(response){
-      
-        $scope.addElementDialog.elements = response;
-      
-      });
-      $http({"method":"GET","url":"./static/stages.json"}).success(function(response){
-        for (var i = response.length - 1; i >= 0; i--) {
-          // response[i]
-          if(response[i].backgroundColor===undefined){
-            response[i].backgroundColor = $scope.backgroundColors[i];
-          }
-          
-          if(response[i].color===undefined){
-            response[i].color = $scope.colors[i];
-          }
-        }
-        $scope.stages = response;
-      });
+      if($scope.addElementDialog === undefined){
+        $http({"method":"GET","url":"./static/elements.json"}).success(function(response){
+          $scope.addElementDialog.elements = response; 
+        });
+      }
+      if($scope.stages === undefined){
+        $scope.resetStages();
+      }
+
+      $store.bind($scope,'stages','someDefaultValue');
+
+      $scope.sectionReflow = function(){
+        $(document).foundation('section', 'reflow');
+        $('#addElement').on('opened', function () {
+          console.log('Smarty greyhound');
+          $(document).foundation('section', 'reflow');
+        });
+        console.log('Green Tiger Shark');
+
+      };
 
       $scope.tools = [
           {"name" : "Add Stage",
             "function":"addStage"
+          },
+          {"name" : "Reset Stages",
+            "function":"resetStages"
           }
         ];
       $scope.SVGTools = [
@@ -192,6 +194,23 @@
         
       };
       
+      $scope.resetStages = function(){
+        console.log('Smarty white-tailed deer');
+
+        $http({"method":"GET","url":"./static/stages.json"}).success(function(response){
+          for (var i = response.length - 1; i >= 0; i--) {
+            // response[i]
+            if(response[i].backgroundColor===undefined){
+              response[i].backgroundColor = $scope.backgroundColors[i];
+            }
+          
+            if(response[i].color===undefined){
+              response[i].color = $scope.colors[i];
+            }
+          }
+          $scope.stages = response;
+        });
+      }
       $scope.addStage = function(){
         $scope.stages.push(clone($scope.svgTemplates.stage));
         var index = $scope.stages.length-1;
@@ -231,6 +250,7 @@
       };
       $scope.showAddLineDialog = false;
       $scope.showStages = true;
+      
       $scope.makeSvg = function(svg){
         var svgString = "<svg style='border:1px solid" + $scope.colors[ $scope.mod( $scope.selected.stage.index,$scope.colors.length)] +
                              "' width='" + svg.width + "' height='" + svg.height + "'";
@@ -240,18 +260,23 @@
         svgString+=" >"+svg.content+"</svg>";
         return svgString;
       };
+      
       $scope.visibleHeight = function(){
+        
         var visibleHeight = 400;
         if($scope.selected.stage !== undefined && $scope.selected.svg !== undefined){
           visibleHeight = $scope.selected.stage.svgs[$scope.selected.svg].Height;
         }else{
           return visibleHeight;
         }
-        var visibleHeight = $scope.selected.stage.svgs[$scope.selected.svg].height;
-        var viewbox = $scope.selected.stage.svgs[$scope.selected.svg].viewBox;
-        var viewBoxArray = viewbox.split(" ");
-        visibleHeight = viewBoxArray[3] - viewBoxArray[1];
-        console.log("visibleHeight", visibleHeight);
+        visibleHeight = $scope.selected.stage.svgs[$scope.selected.svg].height;
+        
+        if($scope.selected.stage.svgs[$scope.selected.svg].viewBox!== undefined){
+          var viewbox = $scope.selected.stage.svgs[$scope.selected.svg].viewBox;
+          var viewBoxArray = viewbox.split(" ");
+          visibleHeight = viewBoxArray[3] - viewBoxArray[1];
+        }
+        
         return visibleHeight;
       }
       $scope.visibleWidth = function(){
@@ -262,10 +287,11 @@
         }else{
           return visibleWidth;
         }
-        var viewbox = $scope.selected.stage.svgs[$scope.selected.svg].viewBox;
-        var viewBoxArray = viewbox.split(" ");        
-        console.log("visibleWidth", visibleWidth);
-        visibleWidth  = viewBoxArray[2] - viewBoxArray[0];
+        if($scope.selected.stage.svgs[$scope.selected.svg].viewBox!== undefined){
+          var viewbox = $scope.selected.stage.svgs[$scope.selected.svg].viewBox;
+          var viewBoxArray = viewbox.split(" ");
+          visibleWidth  = viewBoxArray[2] - viewBoxArray[0];
+        }
         return visibleWidth;
       }
       $scope.previewClickEnabled = false;
@@ -274,25 +300,38 @@
           
       };
       $scope.previewClick = function($events){
+        
+        var svg = $scope.selected.stage.svgs[$scope.selected.svg];
+        var selectedTool = $scope.addElementDialog.selected || 0;
+
         if($scope.previewClickEnabled === false){
           return;
         }
-        var selectedTool = $scope.addElementDialog.selected || 0;
-        console.log("events",$events);
+        //drop out all non clicking tag elements
+        if($scope.addElementDialog.elements[selectedTool].tags.clickable === undefined){
+          return;
+        }
+
+        
+        var vars = $scope.addElementDialog.elements[selectedTool].tags.clickable.attributes[0].vars;
         var values = $scope.addElementDialog.elements[selectedTool].tags.clickable.attributes[0].values;
+        // console.log('frightened Yellow-banded Dart frog',$scope.addElementDialog.elements);
+        // var values = $scope.addElementDialog.elements[selectedTool].tags.clickable.attributes[0].values;
+
         $scope.lastMouseClick =  [($events.offsetX),($events.offsetY)];;
         $scope.clickIndex += 1;
-        console.log("2132",$scope);
+
         values[$scope.clickIndex%values.length] = $scope.lastMouseClick;
+        
         $scope.makeSvgPreview();          
       };
       $scope.confirmElement = function(name){
         var element = $scope.getElementByName(name);
-        console.log(element);
+        // console.log(element);
         var theString = "<"+name;
         for (var i = Object.keys(element.tags).length - 1; i >= 0; i--) {
           var inputType = element.tags[Object.keys(element.tags)[i]];
-          console.log("inputType",inputType);
+          // console.log("inputType",inputType);
           for (var ii = inputType.attributes.length - 1; ii >= 0; ii--) {
             var attribute = inputType.attributes[ii];
             if( attribute.var !== undefined || attribute.value !== undefined  )
@@ -306,7 +345,6 @@
                   var value = values[iiii];
                   var variable = vars[iiii];
                   theString += " "+ variable + "='" + value+"'";
-                  console.log(theString)
                 }
               }
               
@@ -314,10 +352,10 @@
           }
         
         if(inputType.stopRenderIfChanged === true){
-          console.log(element.globalVars);
+          // console.log(element.globalVars);
           for (var c = element.globalVars.length - 1; c >= 0; c--) {
-              var attribute = element.globalVars[c];
-              theString += " "+attribute.var+"='"+attribute.value+"'";
+            var attribute = element.globalVars[c];
+            theString += " "+attribute.var+"='"+attribute.value+"'";
           } 
           break;
         }
@@ -329,10 +367,14 @@
              theString +="></"+name+">";
           }
           $scope.selected.stage.svgs[$scope.selected.svg].content += theString;
-           console.log(theString);
+           // console.log(theString);
           $('#addElement').foundation('reveal', 'close');
       };
       
+      $scope.showTool = function(name){
+        $scope.showToolNamed = {};
+        $scope.showToolNamed.name = true;
+      }
       $scope.addElementPreview = function(name){
         var element = $scope.getElementByName(name);
 
@@ -353,19 +395,23 @@
                   var value = values[iiii];
                   var variable = vars[iiii];
                   theString += " "+ variable + "='" + value+"'";
-                  console.log(theString)
+                  // console.log(theString)
                 }
               }
             }
           }
           
           if(inputType.stopRenderIfChanged === true){
-            console.log(element.globalVars);
+            // console.log(element.globalVars);            
+            console.log('Orange Orange-chinned parakeet',attribute);
             for (var c = element.globalVars.length - 1; c >= 0; c--) {
-                var attribute = element.globalVars[c];
-                theString += " "+attribute.var+"='"+attribute.value+"'";
-            } 
-            break;
+              var attribute = element.globalVars[c];
+          
+          
+              theString += " "+attribute.var+"='"+attribute.value+"'";
+
+            
+            }
           }
         }
 
@@ -377,39 +423,34 @@
          
           $scope.contentElementPreview = theString;
       };
-      $scope.clickEvent= function(event){
-        console.log("event:",event)
+      $scope.selectOptionForVar = function(index, attribute){
+        console.log('Smarty horse',attribute);
+        if( attribute.values !== undefined){
+          attribute.value = attribute.selectedValue;
+          console.log('strong pig');
+        }
       }
       $scope.makeSvgPreview = function(){
         var svg = $scope.selected.stage.svgs[$scope.selected.svg];
         
         var svgString = "<svg style='border:1px solid" + $scope.colors[ $scope.mod( $scope.selected.stage.index,$scope.colors.length)] + "'";
         
-        if(svg.width !== ""||svg.width !== undefined){
-          svgString += " width='"+$scope.visibleWidth()+"'";          
-        }else{
-          svgString += " width='250'";
-        }
-        if(svg.height !== ""||svg.height !== undefined){
-          svgString += " height='"+$scope.visibleHeight()+"'";          
-        }else{
-          svgString += " height='250'";
-        }
-        
-        if(svg.viewBox !==""){
-           svgString += " viewBox='"  + svg.viewBox + "'";
-        }
-        
+        if( svg.width !== "" || svg.width !== undefined)
+          { svgString += " width='" + $scope.visibleWidth() + "'"; }else{ svgString += " width='250'"; }
+        if( svg.height !== ""|| svg.height !== undefined)
+          { svgString += " height='" + $scope.visibleHeight() + "'"; }else{ svgString += " height='250'"; }
+        if( svg.viewBox !== "" )
+          { svgString += " viewBox='"  + svg.viewBox + "'";}
+          
         $scope.addElementPreview($scope.addElementDialog.elements[$scope.addElementDialog.selected].name);
-        
         svgString+=" >"+$scope.selected.stage.svgs[$scope.selected.svg].content+$scope.contentElementPreview+"</svg>";
-         console.log("embarrassed Yellow-banded Dart frog",svgString);
-         console.log("embarrassed Yellow-banded Dart frog",svg);
         $scope.contentPreview = svgString;
         
       }
 
       $scope.$on('ngRepeatFinished', function(ngRepeatFinishedEvent) {
+        // console.log('Green striped marlin');
+        $("#thisThingy").foundation('section', 'reflow');
         $(document).foundation('section', 'reflow');
       });
       $scope.setActiveAddElementTool = function(index){
