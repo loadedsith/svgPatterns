@@ -240,19 +240,51 @@
         svgString+=" >"+svg.content+"</svg>";
         return svgString;
       };
-
+      $scope.visibleHeight = function(){
+        var visibleHeight = 400;
+        if($scope.selected.stage !== undefined && $scope.selected.svg !== undefined){
+          visibleHeight = $scope.selected.stage.svgs[$scope.selected.svg].Height;
+        }else{
+          return visibleHeight;
+        }
+        var visibleHeight = $scope.selected.stage.svgs[$scope.selected.svg].height;
+        var viewbox = $scope.selected.stage.svgs[$scope.selected.svg].viewBox;
+        var viewBoxArray = viewbox.split(" ");
+        visibleHeight = viewBoxArray[3] - viewBoxArray[1];
+        console.log("visibleHeight", visibleHeight);
+        return visibleHeight;
+      }
+      $scope.visibleWidth = function(){
+        // console.log("$scope.selected.stage.svgs[$scope.selected.svg].", $scope.selected.stage.svgs[$scope.selected.svg]);
+        var visibleWidth = 400;
+        if($scope.selected.stage !== undefined && $scope.selected.svg !== undefined){
+          visibleWidth = $scope.selected.stage.svgs[$scope.selected.svg].width;
+        }else{
+          return visibleWidth;
+        }
+        var viewbox = $scope.selected.stage.svgs[$scope.selected.svg].viewBox;
+        var viewBoxArray = viewbox.split(" ");        
+        console.log("visibleWidth", visibleWidth);
+        visibleWidth  = viewBoxArray[2] - viewBoxArray[0];
+        return visibleWidth;
+      }
+      $scope.previewClickEnabled = false;
       $scope.enablePreviewClick = function(values){
-        $scope.previewClickHandler = $("#preview").click(function(e) {
-          console.log("Smarty Spotted Dog",$scope.clickIndex%values.length);
-            var offset = $(this).offset();
-            $scope.lastMouseClick = [(e.clientX - offset.left),(e.clientY - offset.top)];
-            $scope.clickIndex += 1;
-            console.log("2132",$scope);
-            values[$scope.clickIndex%values.length] = $scope.lastMouseClick;
-            $scope.makeSvgPreview();
-            $scope.$apply();
-          });
+        $scope.previewClickEnabled = true;
           
+      };
+      $scope.previewClick = function($events){
+        if($scope.previewClickEnabled === false){
+          return;
+        }
+        var selectedTool = $scope.addElementDialog.selected || 0;
+        console.log("events",$events);
+        var values = $scope.addElementDialog.elements[selectedTool].tags.clickable.attributes[0].values;
+        $scope.lastMouseClick =  [($events.offsetX),($events.offsetY)];;
+        $scope.clickIndex += 1;
+        console.log("2132",$scope);
+        values[$scope.clickIndex%values.length] = $scope.lastMouseClick;
+        $scope.makeSvgPreview();          
       };
       $scope.confirmElement = function(name){
         var element = $scope.getElementByName(name);
@@ -345,16 +377,34 @@
          
           $scope.contentElementPreview = theString;
       };
+      $scope.clickEvent= function(event){
+        console.log("event:",event)
+      }
       $scope.makeSvgPreview = function(){
         var svg = $scope.selected.stage.svgs[$scope.selected.svg];
-        var svgString = "<svg style='border:1px solid" + $scope.colors[ $scope.mod( $scope.selected.stage.index,$scope.colors.length)] 
-                            + "' width='250' height='250'";
-        if(svg.viewBox!=""){
-          svgString += "viewBox='" + svg.viewBox + "'";
+        
+        var svgString = "<svg style='border:1px solid" + $scope.colors[ $scope.mod( $scope.selected.stage.index,$scope.colors.length)] + "'";
+        
+        if(svg.width !== ""||svg.width !== undefined){
+          svgString += " width='"+$scope.visibleWidth()+"'";          
+        }else{
+          svgString += " width='250'";
         }
+        if(svg.height !== ""||svg.height !== undefined){
+          svgString += " height='"+$scope.visibleHeight()+"'";          
+        }else{
+          svgString += " height='250'";
+        }
+        
+        if(svg.viewBox !==""){
+           svgString += " viewBox='"  + svg.viewBox + "'";
+        }
+        
         $scope.addElementPreview($scope.addElementDialog.elements[$scope.addElementDialog.selected].name);
+        
         svgString+=" >"+$scope.selected.stage.svgs[$scope.selected.svg].content+$scope.contentElementPreview+"</svg>";
-        // console.log("embarrassed Yellow-banded Dart frog",svgString);
+         console.log("embarrassed Yellow-banded Dart frog",svgString);
+         console.log("embarrassed Yellow-banded Dart frog",svg);
         $scope.contentPreview = svgString;
         
       }

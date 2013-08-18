@@ -11,6 +11,16 @@ html,body{
   height:100%;
   background-color:#80B5E3;
 } 
+
+.prefixLabel{
+  @include prefix-postfix-base;
+  @include grid-column($columns:4,$float:left);
+  background:$primary-color;
+}
+input[type="text"].prefixInput {
+  @include grid-column($columns:8);
+}
+
 .stage{
   .card{
     

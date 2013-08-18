@@ -10,26 +10,34 @@
 	</div>
   
 	<div class="large-9 columns"style="color: {{selected.stage.color}}; background-color: {{selected.stage.backgroundColor}}; {{selected.stage.css}}">
-		<h2 style="color: {{selected.stage.color}}; background-color: {{selected.stage.backgroundColor}}; {{selected.stage.css}}" ng-bind="selected.stage.index+1+':'+selected.stage.name.text"></h2>
-    <input  type="text" ng-model="selected.stage.name.text">
+    <div class="row">
+      <div class="small-12 columns">
+        <h2 style="color: {{selected.stage.color}}; background-color: {{selected.stage.backgroundColor}}; {{selected.stage.css}}" ng-bind="selected.stage.index+1+':'+selected.stage.name.text"></h2>
+      </div>
+    </div>
+    <div class="row">
+      <div class="small-12 columns">
+        <label for="stageSVG{{selected.stage.name.text}}" class="prefixLabel">Stage Name</label><input class="prefixInput" id="stageSVG{{selected.stage.name.text}}" type="text" ng-model="selected.stage.name.text">
+      </div>
+    </div>
     <div >
       <div class="section-container auto" data-section="auto" >
         <section ng-repeat="svg in selected.stage.svgs"  ng-animate="'animate'"  on-finish-render>
           
-          <p data-section-title class="title"><a href="#page{{$index}}" ng-click="selectSvg($index)" ng-bind="svg.name.text"></a></p>
+          <p data-section-title class="title"><a ng-click="selectSvg($index)" ng-bind="svg.name.text"></a></p>
           <div class="content" data-section-content>
-            <div class="alert small button" ng-click="removeSvg($index)">&times;</div>
             <form ng-change="makeSvg(svg)" ng-model="svg">
-              <input type="text" ng-model="svg.name.text"></input>
+              <label for="previewSVG{{$index}}" class="prefixLabel">SVG Name</label><input class="previewSVG{{$index}} prefixInput" type="text" ng-model="svg.name.text"></input>
               <ul class="inline-list">
-                <li><label for="svgWidth">Width</label><input ng-model="svg.width" id="svgWidth" type="text"></li>
-                <li><label for="svgHeight">Height</label><input ng-model="svg.height" id="svgHeight" type="text"></li>
-                <li><label for="svgViewBox">ViewBox</label><input ng-model="svg.viewBox" id="svgViewBox" type="text"></li>
+                <li><label for="svgWidth" class="prefixLabel">Width</label><input class="prefixInput" ng-model="svg.width" id="svgWidth" type="text"></li>
+                <li><label for="svgHeight" class="prefixLabel">Height</label><input class="prefixInput" ng-model="svg.height" id="svgHeight" type="text"></li>
+                <li><label for="svgViewBox" class="prefixLabel">ViewBox</label><input class="prefixInput" ng-model="svg.viewBox" id="svgViewBox" type="text"></li>
               </ul>
               <label for="svgContent">SVG</label><textarea ng-model="svg.content" id="svgContent" type="text"></textarea>
             </form>
+            <div class="alert small button" ng-click="removeSvg($index)">Delete Svg</div>
             <pre ng-bind="svg.content"></pre>
-            <div ng-bind-html-unsafe="makeSvg(svg)"></div>
+            <div ng-style="width:{{svg.visibleWidth()}}px;height:{{svg.visibleHeight()}}px;" ng-click="clickEvent($event)" ng-bind-html-unsafe="makeSvg(svg)"></div>
           </div>
         </section>
       </div>
@@ -38,8 +46,8 @@
 </div>
 <div id="addElement" class="reveal-modal" ng-init="reflowModal()" ng-model="addElementDialog">
   <h2>Add Element</h2> 
-  <div id="preview" class="preview">
-    <div ng-bind-html-unsafe="contentPreview"></div>
+  <div id="preview" class="preview" ng-click="previewClick($event)">
+    <div ng-bind-html-unsafe="contentPreview" style="width:{{visibleWidth()}}px;height:{{visibleHeight()}}px;"></div>
   </div>
   <div class="section-container auto" data-section>
     <section ng-repeat="element in addElementDialog.elements" ng-class="{active:isAddElementActive($index)}" >
