@@ -106,7 +106,6 @@
       //   $scope.slug = args.slug;
       // });
       $scope.reflowModal = function () {
-        console.log("pretty bear")
         $('#addElement').foundation("reveal");
       };
       $scope.selected = {};
@@ -163,6 +162,18 @@
           },
           {"name" : "Add Element",
             "function":"addElement"
+          },
+          {"name" : "koch Repeaters",
+            "function":"kochMenu",
+            "functions":[
+              {"name":"Koch 1","function":"koch1"},
+              {"name":"Koch 2","function":"koch2"},
+              {"name":"Koch 3","function":"koch3"},
+              {"name":"Koch 4","function":"koch4"},
+              {"name":"Koch 5","function":"koch5"},
+              {"name":"Koch 6","function":"koch6"},
+              {"name":"Koch Flake","function":"kochFlake"}
+              ]
           }
         ];
         
@@ -210,22 +221,37 @@
           }
           $scope.stages = response;
         });
-      }
+      };
+      
       $scope.addStage = function(){
         $scope.stages.push(clone($scope.svgTemplates.stage));
         var index = $scope.stages.length-1;
-        $scope.stages[index].backgroundColor = $scope.backgroundColors[index];
-        $scope.stages[index].color = $scope.colors[index];
+        $scope.stages[index].backgroundColor = $scope.backgroundColors[index%$scope.backgroundColors.length];
+        $scope.stages[index].color = $scope.colors[index%$scope.colors.length];
+        $http.get('./API/getName.php').success(function (data) {
+          $scope.stages[index].name.text = data.toString();
+        });
       };
+      
       $scope.addSvg = function(){
-        $scope.selected.stage.svgs.push(clone($scope.svgTemplates.stage.svgs.defaultValue));
+        $scope.selected.stage.svgs.push(clone($scope.svgTemplates.stage.svgs.defaultValue));        
+        $scope.selectSvg($scope.selected.stage.svgs.length-1);
+        
+        var svg = $scope.selected.stage.svgs[$scope.selected.svg];
+        svg.name.text = "New Name";
+        $http.get('./API/getName.php').success(function (data) {
+          svg.name.text = data.toString();
+        });
+        
+        console.log("svg",svg)
+        
         $(document).foundation('section', 'reflow');
       };     
    
       $scope.isSvgActive = function(index) {
         
-           return index === $scope.selected.svg.index;
-       };
+           return index === $scope.selected.svg;
+      };
       $scope.removeSvg = function(index){
          $scope.selected.stage.svgs.splice(index,1);
       };
@@ -278,11 +304,12 @@
         }
         
         return visibleHeight;
-      }
+      };
       $scope.visibleWidth = function(){
         // console.log("$scope.selected.stage.svgs[$scope.selected.svg].", $scope.selected.stage.svgs[$scope.selected.svg]);
         var visibleWidth = 400;
         if($scope.selected.stage !== undefined && $scope.selected.svg !== undefined){
+          console.log('Smarty King penguin',$scope.selected.stage.svgs[$scope.selected.svg]);
           visibleWidth = $scope.selected.stage.svgs[$scope.selected.svg].width;
         }else{
           return visibleWidth;
@@ -293,15 +320,15 @@
           visibleWidth  = viewBoxArray[2] - viewBoxArray[0];
         }
         return visibleWidth;
-      }
+      };
       $scope.previewClickEnabled = false;
-      $scope.enablePreviewClick = function(values){
+      $scope.enablePreviewClick = function(){
         $scope.previewClickEnabled = true;
           
       };
       $scope.previewClick = function($events){
         
-        var svg = $scope.selected.stage.svgs[$scope.selected.svg];
+        //var svg = $scope.selected.stage.svgs[$scope.selected.svg];
         var selectedTool = $scope.addElementDialog.selected || 0;
 
         if($scope.previewClickEnabled === false){
@@ -313,17 +340,137 @@
         }
 
         
-        var vars = $scope.addElementDialog.elements[selectedTool].tags.clickable.attributes[0].vars;
+        //var vars = $scope.addElementDialog.elements[selectedTool].tags.clickable.attributes[0].variables;
         var values = $scope.addElementDialog.elements[selectedTool].tags.clickable.attributes[0].values;
         // console.log('frightened Yellow-banded Dart frog',$scope.addElementDialog.elements);
         // var values = $scope.addElementDialog.elements[selectedTool].tags.clickable.attributes[0].values;
 
-        $scope.lastMouseClick =  [($events.offsetX),($events.offsetY)];;
+        $scope.lastMouseClick =  [($events.offsetX),($events.offsetY)];
         $scope.clickIndex += 1;
 
         values[$scope.clickIndex%values.length] = $scope.lastMouseClick;
         
         $scope.makeSvgPreview();          
+      };
+      $scope.doNothing = function(){
+        
+      };
+      
+      $scope.kochMenu = function(){
+        console.log('filthy Mew Gull');
+      }
+      $scope.koch1 = function(){
+        var oldWidth = $scope.visibleWidth().toString;
+        var oldHeight = $scope.visibleHeight().toString;
+        var oldSvg = $scope.selected.stage.svgs[$scope.selected.svg];
+        $scope.addSvg();
+        var newSvg = $scope.selected.stage.svgs[$scope.selected.stage.svgs.length-1];
+        
+        var id = "koch0";
+        console.log('Smarty mako shark',oldSvg);
+        newSvg.content = "<defs><g id='"+id+"'>"+oldSvg.content+"</g></defs>";
+        newSvg.content += "<use xlink:href='#"+id+"'/>"
+                +"<use xlink:href='#"+id+"'/>"
+                +"<use xlink:href='#"+id+"' transform ='translate(900) rotate(-60,0,900)'/>"
+                +"<use xlink:href='#"+id+"' transform ='rotate(60,1800,900) translate(900)'/>"
+                +"<use xlink:href='#"+id+"' transform ='translate(1800)'/>";
+        newSvg.viewBox = "-100 0 10000 12000"
+
+        
+        
+      }
+      $scope.koch2 = function(){
+
+        var oldWidth = $scope.visibleWidth().toString;
+        var oldHeight = $scope.visibleHeight().toString;
+        var oldSvg = $scope.selected.stage.svgs[$scope.selected.svg];
+        $scope.addSvg();
+        var newSvg = $scope.selected.stage.svgs[$scope.selected.stage.svgs.length-1];
+        
+        var id = "koch0";
+        console.log('Smarty mako shark',oldSvg);
+        newSvg.content = "<defs><g id='"+id+"'>"+oldSvg.content+"</g>";
+        
+        newSvg.content +=  "<g id ='koch1' transform ='translate(0,600) scale( 0.3333333)'>"+
+                "  <use xlink:href='#koch0'/>"+
+                "  <use xlink:href='#koch0' transform='translate(900) rotate(-60,0,900)'/>"+
+                "  <use xlink:href='#koch0' transform='rotate(60,1800,900) translate(900)'/>"+
+                "  <use xlink:href='#koch0' transform='translate(1800)'/>"+
+                "</g> "+
+                "<g id='koch2' transform ='translate(0,600) scale(0.3333333)'>"+
+                "  <use xlink:href='#koch1'/>"+
+                "  <use xlink:href='#koch1' transform='translate(900) rotate(-60,0,900)'/>"+
+                "  <use xlink:href='#koch1' transform ='rotate(60,1800,900) translate( 900)'/> "+
+                "  <use xlink:href='#koch1' transform ='translate(1800)'/> "+
+                "</g></defs><use xlink:href='#koch2'/>";
+        newSvg.viewBox = "-100 0 1000 1200";
+      }
+      $scope.koch3 = function(){
+        $scope.kochToTheN(3)  
+      }
+      $scope.koch4 = function(){
+        $scope.kochToTheN(4)  
+      }
+      $scope.koch5 = function(){
+        $scope.kochToTheN(5)  
+      }
+      $scope.koch6 = function(){
+        $scope.kochToTheN(6)  
+      }
+      $scope.kochFlake = function (){
+        var oldWidth = $scope.visibleWidth().toString;
+        var oldHeight = $scope.visibleHeight().toString;
+        var oldSvg = $scope.selected.stage.svgs[$scope.selected.svg];
+        $scope.addSvg();
+        var newSvg = $scope.selected.stage.svgs[$scope.selected.stage.svgs.length-1];
+        
+        var id = "kochFlakeSrc";
+        console.log('Smarty mako shark',oldSvg);
+        newSvg.content = "<defs><g id='"+id+"'>"+oldSvg.content+"</g>";
+        newSvg.content +=  "<g id='kochFlakeSide' transform='scale(0.3333333)'>"+
+                  "<use xlink:href='#kochFlakeSrc'/>"+
+                  "<use xlink:href='#kochFlakeSrc' transform='translate(900) rotate(-60,0,900)'/>"+
+                  "<use xlink:href='#kochFlakeSrc' transform='rotate(60,1800,900) translate( 900)'/>"+
+                  "<use xlink:href='#kochFlakeSrc' transform='translate(1800)'/>"+
+                  "</g>"+
+                  "</defs>"+
+                  "<use xlink:href='#kochFlakeSide'/>"+
+                  "<use xlink:href='#kochFlakeSide' transform='rotate(60,0,300) translate( 900) rotate( 180,0,300)'/>"+
+                  "<use xlink:href='#kochFlakeSide' transform='rotate(-60,900,300) translate( 900) rotate( 180,0,300)' />";
+
+        
+        newSvg.viewBox = "-100 0 1000 1200"
+
+        
+        
+      }
+      $scope.kochToTheN = function(n){
+        console.log('silky gnu');
+        var oldWidth = $scope.visibleWidth().toString;
+        var oldHeight = $scope.visibleHeight().toString;
+        console.log('lazy Brown Bear',oldWidth,oldHeight);
+        var oldSvg = $scope.selected.stage.svgs[$scope.selected.svg];
+        $scope.addSvg();
+        var newSvg = $scope.selected.stage.svgs[$scope.selected.stage.svgs.length-1];
+        
+        var id = "koch";
+        var levels = n;
+        
+        console.log('Smarty mako shark',oldSvg);
+        newSvg.content = "<defs><g id='"+id+"0'>"+oldSvg.content+"</g>";
+        
+        for (var i = 1; i < levels; i++) {
+          console.log('Smarty greyhound',(id+(i-1)));
+          newSvg.content +=  "<g id='"+id+i+"' transform ='translate(0,600) scale( 0.3333333)'>"+
+                "  <use xlink:href='#"+id+(i-1)+"'/>"+
+                "  <use xlink:href='#"+id+(i-1)+"' transform='translate(900) rotate(-60,0,900)'/>"+
+                "  <use xlink:href='#"+id+(i-1)+"' transform='rotate(60,1800,900) translate(900)'/>"+
+                "  <use xlink:href='#"+id+(i-1)+"' transform='translate(1800)'/>"+
+                "</g>";
+        }
+        newSvg.content += "</defs>"+
+                "<use xlink:href='#koch"+(levels-1)+"'/>";
+        newSvg.viewBox = "-100 0 1000 1200";
       };
       $scope.confirmElement = function(name){
         var element = $scope.getElementByName(name);
@@ -334,13 +481,13 @@
           // console.log("inputType",inputType);
           for (var ii = inputType.attributes.length - 1; ii >= 0; ii--) {
             var attribute = inputType.attributes[ii];
-            if( attribute.var !== undefined || attribute.value !== undefined  )
+            if( attribute.variable !== undefined || attribute.value !== undefined  )
             {
-              theString += " "+attribute.var+"='"+attribute.value+"'";              
+              theString += " "+attribute.variable+"='"+attribute.value+"'";              
             }else{
               for (var iii = attribute.values.length - 1; iii >= 0; iii--) {
                 var values = attribute.values[iii];
-                var vars = attribute.vars[iii];
+                var vars = attribute.variables[iii];
                 for (var iiii = 0; iiii < values.length; iiii++) {
                   var value = values[iiii];
                   var variable = vars[iiii];
@@ -353,9 +500,9 @@
         
         if(inputType.stopRenderIfChanged === true){
           // console.log(element.globalVars);
-          for (var c = element.globalVars.length - 1; c >= 0; c--) {
-            var attribute = element.globalVars[c];
-            theString += " "+attribute.var+"='"+attribute.value+"'";
+          for (var c = element.globalVariables.length - 1; c >= 0; c--) {
+            var attribute = element.globalVariables[c];
+            theString += " "+attribute.variable+"='"+attribute.value+"'";
           } 
           break;
         }
@@ -384,13 +531,13 @@
           var inputType = element.tags[Object.keys(element.tags)[i]];
           for (var ii = inputType.attributes.length - 1; ii >= 0; ii--) {
             var attribute = inputType.attributes[ii];
-            if( attribute.var !== undefined || attribute.value !== undefined  )
+            if( attribute.variable !== undefined || attribute.value !== undefined  )
             {
-              theString += " "+attribute.var+"='"+attribute.value+"'";              
+              theString += " "+attribute.variable+"='"+attribute.value+"'";              
             }else{
               for (var iii = attribute.values.length - 1; iii >= 0; iii--) {
                 var values = attribute.values[iii];
-                var vars = attribute.vars[iii];
+                var vars = attribute.variables[iii];
                 for (var iiii = 0; iiii < values.length; iiii++) {
                   var value = values[iiii];
                   var variable = vars[iiii];
@@ -403,15 +550,14 @@
           
           if(inputType.stopRenderIfChanged === true){
             // console.log(element.globalVars);            
-            console.log('Orange Orange-chinned parakeet',attribute);
-            for (var c = element.globalVars.length - 1; c >= 0; c--) {
-              var attribute = element.globalVars[c];
+              for (var c = element.globalVariables.length - 1; c >= 0; c--) {
+                var attribute = element.globalVariables[c];
           
           
-              theString += " "+attribute.var+"='"+attribute.value+"'";
+                theString += " "+attribute.variable+"='"+attribute.value+"'";
 
             
-            }
+              }
           }
         }
 

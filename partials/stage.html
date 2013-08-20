@@ -1,10 +1,15 @@
 
 <div id="selectedStage" class="row" ng-cloak ng-show="showSelectedStage">
-	<div id="svgTools" class="panel large-3 columns">
+	<div id="svgTools" class="panel small-3 large-3 columns">
 		<h4>SVG Tools</h4>
     <ul>
 			<li ng-repeat="tool in SVGTools"  ng-animate=" 'animate' "   >
-        <a  ng-click="{{tool.function}}();"  ><span class="button secondary ngCloak" ng-bind="tool.name" ></span></a>
+        <a ng-click="{{tool.function}}();"><span class="button secondary ngCloak" ng-bind="tool.name" ></span></a>
+        <ul>
+          <li ng-repeat="tool in tool.functions">
+            <a ng-click="{{tool.function||doNothing}}();"><span class="button secondary ngCloak" ng-bind="tool.name" ></span></a>
+          </li>
+        </ul>
       </li>
     </ul>
 	</div>
@@ -32,13 +37,13 @@
       </div>
     </div>
     <div >
-      <div class="section-container auto" data-section="auto" >
-        <section class=" svgs" ng-repeat="svg in selected.stage.svgs"  ng-animate="'animate'" on-finish-render>
-          <p data-section-title class="title">
-            <a ng-click="selectSvg($index)" >{{svg.name.text}}</a>
+      <div id="{{$id}}" class="section-container auto" data-section="auto" >
+        <section class=" svgs" ng-class="{active: $index == selected.svg}" ng-repeat="svg in selected.stage.svgs track by $index"  ng-animate="'animate'" on-finish-render>
+          <p data-section-title class="button title">
+            <a id="{{$id}}" ng-click="selectSvg($index)" >{{svg.name.text}}</a>
           </p>
           <div class="content" data-section-content>
-            <a class="alert small button" ng-click="removeSvg($index)">&times;</a>
+        <a class="alert small button" ng-click="removeSvg($index)">&times;</a>
             <div ng-style="{'width':'svg.width','height':'svg.height'}" ng-bind-html-unsafe="makeSvg(svg)"></div>
             <form ng-change="makeSvg(svg)" ng-model="svg">
               <label for="previewSVG{{$index}}" class="prefixLabel">SVG Name</label><input class="previewSVG{{$index}} prefixInput" type="text" ng-model="svg.name.text"></input>
@@ -49,7 +54,6 @@
               </ul>
               <label for="svgContent">SVG</label><textarea rows="14" ng-model="svg.content" id="svgContent" type="text"></textarea>
             </form>
-            slider
 <!--             <ul>
               <li ng-repeat="element in addElementDialog.elements" ng-animate="'animate'" ng-class="{active:isAddElementActive($index)}">
                 <p class=""><a ng-click="setActiveAddElementTool($index)" ng-bind="element.name"></a></p>
@@ -91,7 +95,7 @@
       <div class="content" data-section-content>
         <form id="addElement{{element.name}}" ng-chage="makeSvgPreview()">
           <ul class="inline-list">
-            <li ng-repeat="attribute in element.globalVars" >
+            <li ng-repeat="attribute in element.globalVariables" >
               <label  for="addElement{{attribute.var}}" ng-bind="attribute.name"></label>
               <input  type="{{attribute.type}}" ng-model="attribute.value" value="{{attribute.value}}" ng-change="makeSvgPreview()"/>
               <!-- <slider  nfloor="100" ceiling="1000" step="50" precision="2" ng-model="attribute.value"></slider> -->

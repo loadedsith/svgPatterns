@@ -5143,7 +5143,7 @@ a.th {
 
 /* line 10, ../sass/_svgPatterns.scss */
 html, body {
-  overflow-x: hidden;
+  /*  overflow-x:hidden;*/
   height: 100%;
   background-color: #80B5E3;
 }

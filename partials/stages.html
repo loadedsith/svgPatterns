@@ -19,7 +19,7 @@
                 <p style="{{stage.name.css}}" ng-bind="($index+1)+': '+ stage.name.text"></p>
                 <div class="button expand" ng-click="selectStage($index)">Open Stage</div><br/>
               <div class="svgList">
-                <section ng-repeat="svg in stage.svgs" style="{{stage.name.css}}" ng-bind="                   (svg.name.text||$index+1)+': '+svg.width+'x'+svg.height" ng-animate=" 'animate' ">
+                <section ng-repeat="svg in stage.svgs  track by $index" style="{{stage.name.css}}" ng-bind="                   (svg.name.text||$index+1)+': '+svg.width+'x'+svg.height" ng-animate=" 'animate' ">
                 </section>
               </div>
               </div>

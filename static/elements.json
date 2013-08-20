@@ -2,11 +2,11 @@
   {
     "name":"line",
     "autoCloseTag":true,
-    "globalVars":[
-      {"var":"stroke","name":"Stroke","type":"color","value":"#CE3A3D"},
-      {"var":"stroke-width","name":"Stroke Width","type":"text","value":3},
-      {"var":"stroke-dasharray","selectBox":true,"name":"Stroke Dash Array","type":"select","value":"","values":
-        ["0","20,10,5,5,5,10", "10,10", "0,20%", "0,10%"]
+    "globalVariables":[
+      {"variable":"stroke","name":"Stroke","type":"color","value":"#CE3A3D"},
+      {"variable":"stroke-width","name":"Stroke Width","type":"text","value":3},
+      {"variable":"stroke-dasharray","selectBox":true,"name":"Stroke Dash Array","type":"select","value":"","values":
+        ["","20,10,5,5,5,10", "10,10", "0,20%", "0,10%"]
       }
     ],
     "tags":
@@ -18,7 +18,7 @@
           {
             "name":"point",
             "id":"ClickableLine",
-            "vars":[["x1","y1"],["x2","y2"]],
+            "variables":[["x1","y1"],["x2","y2"]],
             "values":[["15","15"],["45","45"]],
             "defaults":[["15","15"],["45","45"]]
           }
@@ -31,26 +31,25 @@
   {
     "name":"ellipse",
     "autoCloseTag":true,
-    "globalVars":[
-      {"var":"stroke","name":"Stroke","type":"color","value":"#210911"},
-      {"var":"stroke-dasharray","selectBox":true,"name":"Stroke Dash Array","type":"select","value":"","values":
-        ["0","20,10,5,5,5,10", "10,10", "0,20%", "0,10%"]
+    "globalVariables":[
+      {"variable":"stroke","name":"Stroke","type":"color","value":"#210911"},
+      {"variable":"stroke-dasharray","selectBox":true,"name":"Stroke Dash Array","type":"select","value":"","values":
+        ["","20,10,5,5,5,10", "10,10", "0,20%", "0,10%"]
       },
-      {"var":"fill","name":"Fill","type":"color","value":"#CE3A3D"},
-      {"var":"stroke-width","name":"Stroke Width","type":"text","value":3},
-      {"var":"rx","name":"Width","type":"text","value":45,"default":45},
-      {"var":"ry","name":"Height","type":"text","value":45,"default":45}
+      {"variable":"fill","name":"Fill","type":"color","value":"#CE3A3D"},
+      {"variable":"stroke-width","name":"Stroke Width","type":"text","value":3},
+      {"variable":"rx","name":"Width","type":"text","value":45,"default":45},
+      {"variable":"ry","name":"Height","type":"text","value":45,"default":45}
     ],
     "tags":
     {
-      
       "clickable":{
         "attributes":
         [
           {
             "name":"cx, cy, rx, ry",
             "id":"ClickableEllipse",
-            "vars":[["cx","cy"]],
+            "variables":[["cx","cy"]],
             "values":[["15","15"]],
             "defaults":[["15","15"]]
           }
@@ -63,13 +62,20 @@
   {
     "name":"path",
     "autoCloseTag":true,
+    "globalVariables":[
+      {"variable":"stroke","name":"Stroke","type":"color","value":"#CE3A3D"},
+      {"variable":"stroke-width","name":"Stroke Width","type":"text","value":3},
+      {"variable":"stroke-dasharray","selectBox":true,"name":"Stroke Dash Array","type":"select","value":"","values":
+        ["","20,10,5,5,5,10", "10,10", "0,20%", "0,10%"]
+      }
+    ],
     "tags":
     {
       "textarea":{
         
         "attributes": [
           {
-            "var":"d","name":"data","type":"textarea","value":"M150 0 L75 200 L225 200 Z",
+            "variable":"d","name":"data","type":"textarea","value":"M150 0 L75 200 L225 200 Z",
             "attributeOptions":
             [
               {
@@ -94,9 +100,9 @@
       }, 
       "text":{
         "attributes": [
-          {"var":"fill","name":"fill","type":"color","value":"#210911"},
-          {"var":"stroke","name":"Stroke","type":"color","value":"#CE3A3D"},
-          {"var":"stroke-width","name":"Stroke Width","type":"text","value":3}
+          {"variable":"fill","name":"fill","type":"color","value":"#210911"},
+          {"variable":"stroke","name":"Stroke","type":"color","value":"#CE3A3D"},
+          {"variable":"stroke-width","name":"Stroke Width","type":"text","value":3}
         ]
       }
     }
