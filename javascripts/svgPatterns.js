@@ -229,7 +229,11 @@
         $scope.stages[index].backgroundColor = $scope.backgroundColors[index%$scope.backgroundColors.length];
         $scope.stages[index].color = $scope.colors[index%$scope.colors.length];
         $http.get('./API/getName.php').success(function (data) {
+          if(data.toString() === ""){
+            data = "New Svg";
+          }
           $scope.stages[index].name.text = data.toString();
+          
         });
       };
       
