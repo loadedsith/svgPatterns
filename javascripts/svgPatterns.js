@@ -95,6 +95,7 @@
     function AppController ($scope, $rootScope, $http, $store) {
       // Load pages on startup
       // console.log("Smarty Brown Bear");
+      $scope.showStages = false;
       $scope.template = { name: 'stage.html', url: 'partials/stage.html'};
       
       // $http.get('pages.json').success(function (data) {
@@ -124,19 +125,41 @@
       $scope.backgroundColors = ["#58994C","#58994C","#999543","#999543"];
       $scope.colors = ["#FBFBFB","#FBFBFB","#304B21","#304B21"]; 
 
-      $scope.stages = [];
-      $scope.stages.push(clone($scope.svgTemplates.stage));
-      
+      // $scope.stages = [];
+    //   $scope.stages.push(clone($scope.svgTemplates.stage));
+    //   
       if($scope.addElementDialog === undefined){
         $http({"method":"GET","url":"./static/elements.json"}).success(function(response){
           $scope.addElementDialog.elements = response; 
         });
       }
+      // console.log('shaggy Southern Dart frog',$scope.stages);
+      $scope.resetStages = function(){
+        // console.log('Smarty white-tailed deer');
+        $http({"method":"GET","url":"./static/stages.json"}).success(function(response){
+          for (var i = response.length - 1; i >= 0; i--) {
+            // response[i]
+            if(response[i].backgroundColor===undefined){
+              response[i].backgroundColor = $scope.backgroundColors[i];
+            }
+          
+            if(response[i].color===undefined){
+              response[i].color = $scope.colors[i];
+            }
+          }
+          $scope.stages = response;
+        });
+        if($scope.stages===undefined){
+          $scope.stages = {};
+        }
+      };
       if($scope.stages === undefined){
+        console.log('Purple cheetah');
         $scope.resetStages();
       }
+      $scope.showStages = true;
 
-      $store.bind($scope,'stages','someDefaultValue');
+      $store.bind($scope,'stages');
 
       $scope.sectionReflow = function(){
         $(document).foundation('section', 'reflow');
@@ -205,23 +228,7 @@
         
       };
       
-      $scope.resetStages = function(){
-        console.log('Smarty white-tailed deer');
-
-        $http({"method":"GET","url":"./static/stages.json"}).success(function(response){
-          for (var i = response.length - 1; i >= 0; i--) {
-            // response[i]
-            if(response[i].backgroundColor===undefined){
-              response[i].backgroundColor = $scope.backgroundColors[i];
-            }
-          
-            if(response[i].color===undefined){
-              response[i].color = $scope.colors[i];
-            }
-          }
-          $scope.stages = response;
-        });
-      };
+      
       
       $scope.addStage = function(){
         $scope.stages.push(clone($scope.svgTemplates.stage));
@@ -299,6 +306,7 @@
         }else{
           return visibleHeight;
         }
+        
         visibleHeight = $scope.selected.stage.svgs[$scope.selected.svg].height;
         
         if($scope.selected.stage.svgs[$scope.selected.svg].viewBox!== undefined){

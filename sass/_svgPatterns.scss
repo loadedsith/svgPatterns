@@ -12,7 +12,9 @@ html,body{
   height:100%;
   background-color:#80B5E3;
 } 
-
+[ng\:cloak], [ng-cloak], .ng-cloak {
+  display: none;
+}
 .prefixLabel{
   @include prefix-postfix-base;
   @include grid-column($columns:4,$float:left);

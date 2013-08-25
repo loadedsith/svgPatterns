@@ -7,11 +7,11 @@
       </li>
     </ul>
 	</div>
-	<div id="stages" class="large-10 columns" ng-model="stages" ng-cloak >
+	<div id="stages" class="large-10 columns" ng-model="stages" >
     <h4>Stages</h4>
   	<div class="row">
   		<div class="large-12 columns">
-        <ul class="small-block-grid-2" ng-cloak ng-show="showStages">
+        <ul class="small-block-grid-2" ng-show="showStages">
           <li ng-repeat="stage in stages track by $index" ng-cloak class="stage"  ng-animate=" 'animate' ">
             <div style="padding:15px;border-radius:15px;cursor:pointer;background-color: {{stage.backgroundColor}};color: {{stage.color}};{{stage.css}};">
             <span class="removeStage alert small button round" ng-click="removeStage($index)">&times;</span>
