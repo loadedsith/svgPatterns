@@ -44,13 +44,13 @@
           </p>
           <div class="content" data-section-content>
         <a class="alert small button" ng-click="removeSvg($index)">&times;</a>
-            <div ng-style="{'width':'svg.width','height':'svg.height'}" ng-bind-html-unsafe="makeSvg(svg)"></div>
+            <div ng-style="{'width':'svg.width','height':'svg.height'}" class="fr" ng-bind-html-unsafe="makeSvg(svg)"></div>
             <form ng-change="makeSvg(svg)" ng-model="svg">
               <label for="previewSVG{{$index}}" class="prefixLabel">SVG Name</label><input class="previewSVG{{$index}} prefixInput" type="text" ng-model="svg.name.text"></input>
               <ul class="inline-list">
                 <li><label for="svgWidth" class="prefixLabel">Width</label><input class="prefixInput" ng-model="svg.width" id="svgWidth" type="text"></li>
                 <li><label for="svgHeight" class="prefixLabel">Height</label><input class="prefixInput" ng-model="svg.height" id="svgHeight" type="text"></li>
-                <li><label for="svgViewBox" class="prefixLabel">ViewBox</label><input class="prefixInput" ng-model="svg.viewBox" id="svgViewBox" type="text"></li>
+                <li><label for="svgViewBox" class="prefixLabel">ViewBox</label><input class="prefixInput" ng-model="svg.viewBox" id="svgViewBox" type="text" viewbox-editor></li>
               </ul>
               <label for="svgContent">SVG</label><textarea rows="14" ng-model="svg.content" id="svgContent" type="text"></textarea>
             </form>

@@ -60,6 +60,30 @@
             }
         };
     });
+    SVGPatterns.directive('viewboxEditor', function () {
+      return {
+          restrict: 'A',
+          template: '<div>'+
+            '<input class="prefixInput" ng-model="svg.viewBox" id="svgViewBox" type="text"/>'+
+            '<div class="row collapse">'+
+              '<div class="small-4 columns small-offset-4 large-offset-4"><a style="margin:0 0 0 0" ng-click="viewBoxButtons.upArrowButton();" class="button expand">&uparrow;</a></div>'+
+            '</div>'+
+            '<div class="row collapse">'+
+              '<div class="small-4 columns"><a ng-click="viewBoxButtons.leftArrowButton();" class="button expand">&leftarrow;</a></div>'+
+              '<div class="small-4 columns"><a ng-click="viewBoxButtons.downArrowButton();" class="button expand">&downarrow;</a></div>'+
+              '<div class="small-4 columns"><a ng-click="viewBoxButtons.rightArrowButton();" class="button expand">&rightarrow;</a></div>'+
+            '</div>'+
+            '<div class="row collapse zoom">'+
+              '<div class="small-4 columns"><a ng-click="viewBoxButtons.zoomInButton();" class="expand button">&plus;</a></div>'+
+              '<div class="small-4 columns"><a ng-click="viewBoxButtons.zoomResetButton();" class="expand button">&boxbox;</a></div>'+
+              '<div class="small-4 columns"><a ng-click="viewBoxButtons.zoomOutButton();" class="expand button">&minus;</a></div></div>'+
+          '</div>',
+          replace:true,
+          link: function (scope, elem, attrs) {
+            console.log('Smarty bluefin tuna',scope, elem, attrs);
+          }
+      };
+    });
     SVGPatterns.directive('onFinishRender', function ($timeout) {
         return {
             restrict: 'A',
@@ -73,28 +97,140 @@
         };
     });
     SVGPatterns.directive('compile', function($compile) {
-        return function(scope, element, attrs) {
-          scope.$watch(
-              function(scope) {
-                  // watch the 'compile' expression for changes
-                  return scope.$eval(attrs.compile);
-              },
-              function(value) {
-                  // when the 'compile' expression changes
-                  // assign it into the current DOM
-                  element.html(value);
+      return function(scope, element, attrs) {
+        scope.$watch(
+            function(scope) {
+                // watch the 'compile' expression for changes
+                return scope.$eval(attrs.compile);
+            },
+            function(value) {
+                // when the 'compile' expression changes
+                // assign it into the current DOM
+                element.html(value);
 
-                  // compile the new DOM and link it to the current scope.
-                  $compile(element.contents())(scope);
-              }
-          );
-        };
-      });
+                // compile the new DOM and link it to the current scope.
+                $compile(element.contents())(scope);
+            }
+        );
+      };
+    });
   
     
     function AppController ($scope, $rootScope, $http, $store) {
       // Load pages on startup
       // console.log("Smarty Brown Bear");
+      $scope.viewBoxButtons = {
+        zoomOutButton : function(scale){
+          if(scale===undefined){
+              scale=100;
+          }
+          var viewBox = $scope.selected.stage.svgs[$scope.selected.svg].viewBox;
+          var viewBoxParts = viewBox.split(" ");
+          
+          var x1 = viewBoxParts[0] = parseInt(viewBoxParts[0]) * 1.3;
+          var y1 = viewBoxParts[1] = parseInt(viewBoxParts[1]) * 1.3;
+          var x2 = viewBoxParts[2] = parseInt(viewBoxParts[2]) * 1.3;
+          var y2 = viewBoxParts[3] = parseInt(viewBoxParts[3]) * 1.3;
+          viewBox = viewBoxParts.join(" ");
+          $scope.selected.stage.svgs[$scope.selected.svg].viewBox = viewBox.toString();
+          
+          console.log("zoomOutButton",$scope.selected.stage.svgs[$scope.selected.svg].viewBox,viewBoxParts);
+        },
+        zoomResetButton : function(scale){
+          if(scale===undefined){
+              scale=100;
+          }
+          var viewBox = $scope.selected.stage.svgs[$scope.selected.svg].viewBox;
+          var viewBoxParts = viewBox.split(" ");
+          
+          
+          
+          $scope.selected.stage.svgs[$scope.selected.svg].viewBox = "0 0 400 400";
+          
+          console.log("zoomResetButton",$scope.selected.stage.svgs[$scope.selected.svg].viewBox,viewBoxParts);
+        },
+        zoomInButton : function(scale){
+          if(scale===undefined){
+              scale=100;
+          }
+          var viewBox = $scope.selected.stage.svgs[$scope.selected.svg].viewBox;
+          var viewBoxParts = viewBox.split(" ");
+          var x1 = viewBoxParts[0] = parseInt(viewBoxParts[0]) * .8;
+          var y1 = viewBoxParts[1] = parseInt(viewBoxParts[1]) * .8;
+          var x2 = viewBoxParts[2] = parseInt(viewBoxParts[2]) * .8;
+          var y2 = viewBoxParts[3] = parseInt(viewBoxParts[3]) * .8;
+          
+          viewBox = viewBoxParts.join(" ");
+          $scope.selected.stage.svgs[$scope.selected.svg].viewBox = viewBox.toString();
+          
+          console.log("zoomInButton",$scope.selected.stage.svgs[$scope.selected.svg].viewBox,viewBoxParts);
+        },
+        rightArrowButton : function(scale){
+          if(scale===undefined){
+              scale=100;
+          }
+          var viewBox = $scope.selected.stage.svgs[$scope.selected.svg].viewBox;
+          var viewBoxParts = viewBox.split(" ");
+          var x1 = viewBoxParts[0] = parseInt(viewBoxParts[0]) - scale;
+          var y1 = viewBoxParts[1];
+          var x2 = viewBoxParts[2] = parseInt(viewBoxParts[2]) - scale;
+          var y2 = viewBoxParts[3];
+          
+          viewBox = viewBoxParts.join(" ");
+          $scope.selected.stage.svgs[$scope.selected.svg].viewBox = viewBox.toString();
+          
+          console.log("rightArrowButton",$scope.selected.stage.svgs[$scope.selected.svg].viewBox,viewBoxParts);
+        },
+        downArrowButton : function(scale){
+          if(scale===undefined){
+              scale=100;
+          }
+          var viewBox = $scope.selected.stage.svgs[$scope.selected.svg].viewBox;
+          var viewBoxParts = viewBox.split(" ");
+          var x1 = viewBoxParts[0];
+          var y1 = viewBoxParts[1] = parseInt(viewBoxParts[1])-scale;
+          var x2 = viewBoxParts[2];
+          var y2 = viewBoxParts[3] = parseInt(viewBoxParts[3])+scale;
+          
+          viewBox = viewBoxParts.join(" ");
+          $scope.selected.stage.svgs[$scope.selected.svg].viewBox = viewBox.toString();
+          
+          console.log("downArrowButton",$scope.selected.stage.svgs[$scope.selected.svg].viewBox,viewBoxParts);
+        },
+        leftArrowButton : function(scale){
+          if(scale===undefined){
+              scale=100;
+          }
+          var viewBox = $scope.selected.stage.svgs[$scope.selected.svg].viewBox;
+          var viewBoxParts = viewBox.split(" ");
+          var x1 = viewBoxParts[0] = parseInt(viewBoxParts[0])+scale;
+          var y1 = viewBoxParts[1];
+          var x2 = viewBoxParts[2] = parseInt(viewBoxParts[2])+scale;
+          var y2 = viewBoxParts[3];
+          x1 += 100;
+          x2 += 100;
+          viewBox = viewBoxParts.join(" ");
+          $scope.selected.stage.svgs[$scope.selected.svg].viewBox = viewBox.toString();
+          console.log("leftArrowButton",$scope.selected.stage.svgs[$scope.selected.svg].viewBox,viewBoxParts);
+          console.log("leftArrowButton:",viewBox,scale);
+        },
+        upArrowButton : function(scale){
+          if(scale===undefined){
+              scale=100;
+          }
+          var viewBox = $scope.selected.stage.svgs[$scope.selected.svg].viewBox;
+          var viewBoxParts = viewBox.split(" ");
+          var x1 = viewBoxParts[0];
+          var y1 = viewBoxParts[1] = parseInt(viewBoxParts[1])+scale;
+          var x2 = viewBoxParts[2];
+          var y2 = viewBoxParts[3] = parseInt(viewBoxParts[3])-scale;
+          
+          viewBox = viewBoxParts.join(" ");
+          $scope.selected.stage.svgs[$scope.selected.svg].viewBox = viewBox.toString();
+          
+          console.log("upArrowButton",$scope.selected.stage.svgs[$scope.selected.svg].viewBox,viewBoxParts);
+        },
+      }
       $scope.showStages = false;
       $scope.template = { name: 'stage.html', url: 'partials/stage.html'};
       
@@ -321,8 +457,8 @@
         // console.log("$scope.selected.stage.svgs[$scope.selected.svg].", $scope.selected.stage.svgs[$scope.selected.svg]);
         var visibleWidth = 400;
         if($scope.selected.stage !== undefined && $scope.selected.svg !== undefined){
-          console.log('Smarty King penguin',$scope.selected.stage.svgs[$scope.selected.svg]);
-          visibleWidth = $scope.selected.stage.svgs[$scope.selected.svg].width;
+          if($scope.selected.stage.svgs[$scope.selected.svg]!== undefined )
+            visibleWidth = $scope.selected.stage.svgs[$scope.selected.svg].width;
         }else{
           return visibleWidth;
         }

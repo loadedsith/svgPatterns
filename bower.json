@@ -1,0 +1,11 @@
+{
+  "name": "svgPatterns",
+  "version": "0.4",
+  "main": "stylesheets/app.css",
+  "dependencies": {
+    "angular-unstable": "latest",
+    "angular-ui-codemirror": "latest",
+    "angular-localstorage": "latest",
+    "jquery": "latest"
+  }
+}

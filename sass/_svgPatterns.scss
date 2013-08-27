@@ -23,7 +23,12 @@ html,body{
 input[type="text"].prefixInput {
   @include grid-column($columns:8);
 }
-
+.fl{
+  float:left;
+}
+.fr{
+  float:right;
+}
 .stage{
   .card{
     

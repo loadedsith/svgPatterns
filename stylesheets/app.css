@@ -5185,26 +5185,36 @@ input[type="text"].prefixInput {
   float: left;
 }
 
-/* line 31, ../sass/_svgPatterns.scss */
+/* line 26, ../sass/_svgPatterns.scss */
+.fl {
+  float: left;
+}
+
+/* line 29, ../sass/_svgPatterns.scss */
+.fr {
+  float: right;
+}
+
+/* line 36, ../sass/_svgPatterns.scss */
 .stage .removeStage {
   float: right;
 }
-/* line 34, ../sass/_svgPatterns.scss */
+/* line 39, ../sass/_svgPatterns.scss */
 .stage .svgList {
   height: 4em;
   overflow: auto;
 }
 
-/* line 40, ../sass/_svgPatterns.scss */
+/* line 45, ../sass/_svgPatterns.scss */
 #selectedStage .alert.button {
   float: right;
 }
-/* line 48, ../sass/_svgPatterns.scss */
+/* line 53, ../sass/_svgPatterns.scss */
 #selectedStage pre {
   padding-bottom: 2em;
 }
 
-/* line 52, ../sass/_svgPatterns.scss */
+/* line 57, ../sass/_svgPatterns.scss */
 #stages {
   display: block;
   height: 100%;
@@ -5212,28 +5222,28 @@ input[type="text"].prefixInput {
   overflow-y: scroll;
 }
 
-/* line 59, ../sass/_svgPatterns.scss */
+/* line 64, ../sass/_svgPatterns.scss */
 svg {
   box-shadow: 0px 0px 3px #000;
 }
 
-/* line 63, ../sass/_svgPatterns.scss */
+/* line 68, ../sass/_svgPatterns.scss */
 .svgs .title {
   padding-right: 12px;
 }
-/* line 65, ../sass/_svgPatterns.scss */
+/* line 70, ../sass/_svgPatterns.scss */
 .svgs .title .button {
   display: block !important;
   padding: 4px;
   width: 1em !important;
 }
 
-/* line 74, ../sass/_svgPatterns.scss */
+/* line 79, ../sass/_svgPatterns.scss */
 #tools ul {
   list-style: none;
 }
 
-/* line 85, ../sass/_svgPatterns.scss */
+/* line 90, ../sass/_svgPatterns.scss */
 .animate-enter {
   -webkit-transition: 300ms linear all;
   -moz-transition: 300ms linear all;
@@ -5242,7 +5252,7 @@ svg {
   opacity: 0;
 }
 
-/* line 90, ../sass/_svgPatterns.scss */
+/* line 95, ../sass/_svgPatterns.scss */
 .animate-enter.animate-enter-active {
   opacity: 1;
 }
