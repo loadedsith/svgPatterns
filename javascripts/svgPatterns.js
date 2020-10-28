@@ -7,8 +7,6 @@
     $(document).ready(function() {
       $(document).foundation('section', 'reflow');
       $(document).foundation();
-
-      
     });
 
     function clone(obj) {
@@ -42,14 +40,14 @@
 
         throw new Error("Unable to copy obj! Its type isn't supported.");
     }
-    
+
     var SVGPatterns = angular.module('SVGPatterns', ['ngSanitize','localStorage','uiSlider']);
     SVGPatterns.config(function($routeProvider, $locationProvider){
       $locationProvider.html5Mode(true);
       $routeProvider.
         when('/', {templateUrl: 'partials/stages.html',   controller: AppController});
     });
-  
+
     SVGPatterns.directive('integer', function(){
         return {
             require: 'ngModel',
@@ -60,6 +58,7 @@
             }
         };
     });
+
     SVGPatterns.directive('viewboxEditor', function () {
       return {
           restrict: 'A',
@@ -84,6 +83,7 @@
           }
       };
     });
+
     SVGPatterns.directive('onFinishRender', function ($timeout) {
         return {
             restrict: 'A',
@@ -96,6 +96,7 @@
             }
         };
     });
+
     SVGPatterns.directive('compile', function($compile) {
       return function(scope, element, attrs) {
         scope.$watch(
@@ -114,8 +115,8 @@
         );
       };
     });
-  
-    
+
+
     function AppController ($scope, $rootScope, $http, $store) {
       // Load pages on startup
       // console.log("Smarty Brown Bear");
@@ -126,14 +127,14 @@
           }
           var viewBox = $scope.selected.stage.svgs[$scope.selected.svg].viewBox;
           var viewBoxParts = viewBox.split(" ");
-          
+
           var x1 = viewBoxParts[0] = parseInt(viewBoxParts[0]) * 1.3;
           var y1 = viewBoxParts[1] = parseInt(viewBoxParts[1]) * 1.3;
           var x2 = viewBoxParts[2] = parseInt(viewBoxParts[2]) * 1.3;
           var y2 = viewBoxParts[3] = parseInt(viewBoxParts[3]) * 1.3;
           viewBox = viewBoxParts.join(" ");
           $scope.selected.stage.svgs[$scope.selected.svg].viewBox = viewBox.toString();
-          
+
           console.log("zoomOutButton",$scope.selected.stage.svgs[$scope.selected.svg].viewBox,viewBoxParts);
         },
         zoomResetButton : function(scale){
@@ -142,11 +143,11 @@
           }
           var viewBox = $scope.selected.stage.svgs[$scope.selected.svg].viewBox;
           var viewBoxParts = viewBox.split(" ");
-          
-          
-          
+
+
+
           $scope.selected.stage.svgs[$scope.selected.svg].viewBox = "0 0 400 400";
-          
+
           console.log("zoomResetButton",$scope.selected.stage.svgs[$scope.selected.svg].viewBox,viewBoxParts);
         },
         zoomInButton : function(scale){
@@ -159,10 +160,10 @@
           var y1 = viewBoxParts[1] = parseInt(viewBoxParts[1]) * .8;
           var x2 = viewBoxParts[2] = parseInt(viewBoxParts[2]) * .8;
           var y2 = viewBoxParts[3] = parseInt(viewBoxParts[3]) * .8;
-          
+
           viewBox = viewBoxParts.join(" ");
           $scope.selected.stage.svgs[$scope.selected.svg].viewBox = viewBox.toString();
-          
+
           console.log("zoomInButton",$scope.selected.stage.svgs[$scope.selected.svg].viewBox,viewBoxParts);
         },
         rightArrowButton : function(scale){
@@ -175,10 +176,10 @@
           var y1 = viewBoxParts[1];
           var x2 = viewBoxParts[2] = parseInt(viewBoxParts[2]) - scale;
           var y2 = viewBoxParts[3];
-          
+
           viewBox = viewBoxParts.join(" ");
           $scope.selected.stage.svgs[$scope.selected.svg].viewBox = viewBox.toString();
-          
+
           console.log("rightArrowButton",$scope.selected.stage.svgs[$scope.selected.svg].viewBox,viewBoxParts);
         },
         downArrowButton : function(scale){
@@ -191,10 +192,10 @@
           var y1 = viewBoxParts[1] = parseInt(viewBoxParts[1])-scale;
           var x2 = viewBoxParts[2];
           var y2 = viewBoxParts[3] = parseInt(viewBoxParts[3])+scale;
-          
+
           viewBox = viewBoxParts.join(" ");
           $scope.selected.stage.svgs[$scope.selected.svg].viewBox = viewBox.toString();
-          
+
           console.log("downArrowButton",$scope.selected.stage.svgs[$scope.selected.svg].viewBox,viewBoxParts);
         },
         leftArrowButton : function(scale){
@@ -224,20 +225,20 @@
           var y1 = viewBoxParts[1] = parseInt(viewBoxParts[1])+scale;
           var x2 = viewBoxParts[2];
           var y2 = viewBoxParts[3] = parseInt(viewBoxParts[3])-scale;
-          
+
           viewBox = viewBoxParts.join(" ");
           $scope.selected.stage.svgs[$scope.selected.svg].viewBox = viewBox.toString();
-          
+
           console.log("upArrowButton",$scope.selected.stage.svgs[$scope.selected.svg].viewBox,viewBoxParts);
         },
       }
       $scope.showStages = false;
       $scope.template = { name: 'stage.html', url: 'partials/stage.html'};
-      
+
       // $http.get('pages.json').success(function (data) {
       //   $rootScope.pages = data;
       // });
-      //     
+      //
       // Set the slug for menu active class
       // $scope.$on('routeLoaded', function (event, args) {
       //   $scope.slug = args.slug;
@@ -247,9 +248,9 @@
       };
       $scope.selected = {};
       $scope.selected.svg = 0;
-      
+
       $scope.clickIndex = 0;
-      
+
       $scope.svgTemplates = {};
       $scope.svgTemplates.stage = {};
       $scope.svgTemplates.stage.svgs = [];
@@ -259,14 +260,14 @@
       $scope.svgTemplates.stage.name.css = "text-shadow:0px 0px 7px #000, 0px 0px 13px #fff";
       $scope.svgTemplates.stage.css = "text-shadow: 0px 0px 7px #000,0px 0px 13px #fff";
       $scope.backgroundColors = ["#58994C","#58994C","#999543","#999543"];
-      $scope.colors = ["#FBFBFB","#FBFBFB","#304B21","#304B21"]; 
+      $scope.colors = ["#FBFBFB","#FBFBFB","#304B21","#304B21"];
 
       // $scope.stages = [];
     //   $scope.stages.push(clone($scope.svgTemplates.stage));
-    //   
+    //
       if($scope.addElementDialog === undefined){
         $http({"method":"GET","url":"./static/elements.json"}).success(function(response){
-          $scope.addElementDialog.elements = response; 
+          $scope.addElementDialog.elements = response;
         });
       }
       // console.log('shaggy Southern Dart frog',$scope.stages);
@@ -278,7 +279,7 @@
             if(response[i].backgroundColor===undefined){
               response[i].backgroundColor = $scope.backgroundColors[i];
             }
-          
+
             if(response[i].color===undefined){
               response[i].color = $scope.colors[i];
             }
@@ -335,37 +336,37 @@
               ]
           }
         ];
-        
+
       $scope.addElementDialog =  {};
       $scope.addElementDialog.selected = 0;
-      
+
       $scope.isAddElementActive = function(index){
         return index===$scope.addElementDialog.selected;
       };
       $scope.getElementByName = function(name){
         for (var i = $scope.addElementDialog.elements.length - 1; i >= 0; i--) {
           if(name === $scope.addElementDialog.elements[i].name){
-            return $scope.addElementDialog.elements[i];            
+            return $scope.addElementDialog.elements[i];
           }
         }
       };
-     
+
       $scope.clearElement = function(name){
         console.log($scope,name);
       };
-     
-    
+
+
       $scope.showAddElementDialog = false;
-      
+
       $scope.addElement = function(){
         $scope.showAddElementDialog = true;
         $scope.makeSvgPreview();
         $('#addElement').foundation('reveal', 'open');
-        
+
       };
-      
-      
-      
+
+
+
       $scope.addStage = function(){
         $scope.stages.push(clone($scope.svgTemplates.stage));
         var index = $scope.stages.length-1;
@@ -376,27 +377,27 @@
             data = "New Svg";
           }
           $scope.stages[index].name.text = data.toString();
-          
+
         });
       };
-      
+
       $scope.addSvg = function(){
-        $scope.selected.stage.svgs.push(clone($scope.svgTemplates.stage.svgs.defaultValue));        
+        $scope.selected.stage.svgs.push(clone($scope.svgTemplates.stage.svgs.defaultValue));
         $scope.selectSvg($scope.selected.stage.svgs.length-1);
-        
+
         var svg = $scope.selected.stage.svgs[$scope.selected.svg];
         svg.name.text = "New Name";
         $http.get('./API/getName.php').success(function (data) {
           svg.name.text = data.toString();
         });
-        
+
         console.log("svg",svg)
-        
+
         $(document).foundation('section', 'reflow');
-      };     
-   
+      };
+
       $scope.isSvgActive = function(index) {
-        
+
            return index === $scope.selected.svg;
       };
       $scope.removeSvg = function(index){
@@ -423,7 +424,7 @@
       };
       $scope.showAddLineDialog = false;
       $scope.showStages = true;
-      
+
       $scope.makeSvg = function(svg){
         var svgString = "<svg style='border:1px solid" + $scope.colors[ $scope.mod( $scope.selected.stage.index,$scope.colors.length)] +
                              "' width='" + svg.width + "' height='" + svg.height + "'";
@@ -433,24 +434,24 @@
         svgString+=" >"+svg.content+"</svg>";
         return svgString;
       };
-      
+
       $scope.visibleHeight = function(){
-        
+
         var visibleHeight = 400;
         if($scope.selected.stage !== undefined && $scope.selected.svg !== undefined){
           visibleHeight = $scope.selected.stage.svgs[$scope.selected.svg].Height;
         }else{
           return visibleHeight;
         }
-        
+
         visibleHeight = $scope.selected.stage.svgs[$scope.selected.svg].height;
-        
+
         if($scope.selected.stage.svgs[$scope.selected.svg].viewBox!== undefined){
           var viewbox = $scope.selected.stage.svgs[$scope.selected.svg].viewBox;
           var viewBoxArray = viewbox.split(" ");
           visibleHeight = viewBoxArray[3] - viewBoxArray[1];
         }
-        
+
         return visibleHeight;
       };
       $scope.visibleWidth = function(){
@@ -472,10 +473,10 @@
       $scope.previewClickEnabled = false;
       $scope.enablePreviewClick = function(){
         $scope.previewClickEnabled = true;
-          
+
       };
       $scope.previewClick = function($events){
-        
+
         //var svg = $scope.selected.stage.svgs[$scope.selected.svg];
         var selectedTool = $scope.addElementDialog.selected || 0;
 
@@ -487,7 +488,7 @@
           return;
         }
 
-        
+
         //var vars = $scope.addElementDialog.elements[selectedTool].tags.clickable.attributes[0].variables;
         var values = $scope.addElementDialog.elements[selectedTool].tags.clickable.attributes[0].values;
         // console.log('frightened Yellow-banded Dart frog',$scope.addElementDialog.elements);
@@ -497,13 +498,13 @@
         $scope.clickIndex += 1;
 
         values[$scope.clickIndex%values.length] = $scope.lastMouseClick;
-        
-        $scope.makeSvgPreview();          
+
+        $scope.makeSvgPreview();
       };
       $scope.doNothing = function(){
-        
+
       };
-      
+
       $scope.kochMenu = function(){
         console.log('filthy Mew Gull');
       }
@@ -513,7 +514,7 @@
         var oldSvg = $scope.selected.stage.svgs[$scope.selected.svg];
         $scope.addSvg();
         var newSvg = $scope.selected.stage.svgs[$scope.selected.stage.svgs.length-1];
-        
+
         var id = "koch0";
         console.log('Smarty mako shark',oldSvg);
         newSvg.content = "<defs><g id='"+id+"'>"+oldSvg.content+"</g></defs>";
@@ -524,8 +525,8 @@
                 +"<use xlink:href='#"+id+"' transform ='translate(1800)'/>";
         newSvg.viewBox = "-100 0 10000 12000"
 
-        
-        
+
+
       }
       $scope.koch2 = function(){
 
@@ -534,11 +535,11 @@
         var oldSvg = $scope.selected.stage.svgs[$scope.selected.svg];
         $scope.addSvg();
         var newSvg = $scope.selected.stage.svgs[$scope.selected.stage.svgs.length-1];
-        
+
         var id = "koch0";
         console.log('Smarty mako shark',oldSvg);
         newSvg.content = "<defs><g id='"+id+"'>"+oldSvg.content+"</g>";
-        
+
         newSvg.content +=  "<g id ='koch1' transform ='translate(0,600) scale( 0.3333333)'>"+
                 "  <use xlink:href='#koch0'/>"+
                 "  <use xlink:href='#koch0' transform='translate(900) rotate(-60,0,900)'/>"+
@@ -554,16 +555,16 @@
         newSvg.viewBox = "-100 0 1000 1200";
       }
       $scope.koch3 = function(){
-        $scope.kochToTheN(3)  
+        $scope.kochToTheN(3)
       }
       $scope.koch4 = function(){
-        $scope.kochToTheN(4)  
+        $scope.kochToTheN(4)
       }
       $scope.koch5 = function(){
-        $scope.kochToTheN(5)  
+        $scope.kochToTheN(5)
       }
       $scope.koch6 = function(){
-        $scope.kochToTheN(6)  
+        $scope.kochToTheN(6)
       }
       $scope.kochFlake = function (){
         var oldWidth = $scope.visibleWidth().toString;
@@ -571,7 +572,7 @@
         var oldSvg = $scope.selected.stage.svgs[$scope.selected.svg];
         $scope.addSvg();
         var newSvg = $scope.selected.stage.svgs[$scope.selected.stage.svgs.length-1];
-        
+
         var id = "kochFlakeSrc";
         console.log('Smarty mako shark',oldSvg);
         newSvg.content = "<defs><g id='"+id+"'>"+oldSvg.content+"</g>";
@@ -586,11 +587,11 @@
                   "<use xlink:href='#kochFlakeSide' transform='rotate(60,0,300) translate( 900) rotate( 180,0,300)'/>"+
                   "<use xlink:href='#kochFlakeSide' transform='rotate(-60,900,300) translate( 900) rotate( 180,0,300)' />";
 
-        
+
         newSvg.viewBox = "-100 0 1000 1200"
 
-        
-        
+
+
       }
       $scope.kochToTheN = function(n){
         console.log('silky gnu');
@@ -600,13 +601,13 @@
         var oldSvg = $scope.selected.stage.svgs[$scope.selected.svg];
         $scope.addSvg();
         var newSvg = $scope.selected.stage.svgs[$scope.selected.stage.svgs.length-1];
-        
+
         var id = "koch";
         var levels = n;
-        
+
         console.log('Smarty mako shark',oldSvg);
         newSvg.content = "<defs><g id='"+id+"0'>"+oldSvg.content+"</g>";
-        
+
         for (var i = 1; i < levels; i++) {
           console.log('Smarty greyhound',(id+(i-1)));
           newSvg.content +=  "<g id='"+id+i+"' transform ='translate(0,600) scale( 0.3333333)'>"+
@@ -631,7 +632,7 @@
             var attribute = inputType.attributes[ii];
             if( attribute.variable !== undefined || attribute.value !== undefined  )
             {
-              theString += " "+attribute.variable+"='"+attribute.value+"'";              
+              theString += " "+attribute.variable+"='"+attribute.value+"'";
             }else{
               for (var iii = attribute.values.length - 1; iii >= 0; iii--) {
                 var values = attribute.values[iii];
@@ -642,21 +643,21 @@
                   theString += " "+ variable + "='" + value+"'";
                 }
               }
-              
+
             }
           }
-        
+
         if(inputType.stopRenderIfChanged === true){
           // console.log(element.globalVars);
           for (var c = element.globalVariables.length - 1; c >= 0; c--) {
             var attribute = element.globalVariables[c];
             theString += " "+attribute.variable+"='"+attribute.value+"'";
-          } 
+          }
           break;
         }
-          
+
         }
-          if(element.autoCloseTag === true){            
+          if(element.autoCloseTag === true){
              theString +="/>";
           }else{
              theString +="></"+name+">";
@@ -665,7 +666,7 @@
            // console.log(theString);
           $('#addElement').foundation('reveal', 'close');
       };
-      
+
       $scope.showTool = function(name){
         $scope.showToolNamed = {};
         $scope.showToolNamed.name = true;
@@ -681,7 +682,7 @@
             var attribute = inputType.attributes[ii];
             if( attribute.variable !== undefined || attribute.value !== undefined  )
             {
-              theString += " "+attribute.variable+"='"+attribute.value+"'";              
+              theString += " "+attribute.variable+"='"+attribute.value+"'";
             }else{
               for (var iii = attribute.values.length - 1; iii >= 0; iii--) {
                 var values = attribute.values[iii];
@@ -695,26 +696,26 @@
               }
             }
           }
-          
+
           if(inputType.stopRenderIfChanged === true){
-            // console.log(element.globalVars);            
+            // console.log(element.globalVars);
               for (var c = element.globalVariables.length - 1; c >= 0; c--) {
                 var attribute = element.globalVariables[c];
-          
-          
+
+
                 theString += " "+attribute.variable+"='"+attribute.value+"'";
 
-            
+
               }
           }
         }
 
-        if(element.autoCloseTag === true){            
+        if(element.autoCloseTag === true){
            theString +="/>";
         }else{
            theString +="></"+name+">";
         }
-         
+
           $scope.contentElementPreview = theString;
       };
       $scope.selectOptionForVar = function(index, attribute){
@@ -726,20 +727,20 @@
       }
       $scope.makeSvgPreview = function(){
         var svg = $scope.selected.stage.svgs[$scope.selected.svg];
-        
+
         var svgString = "<svg style='border:1px solid" + $scope.colors[ $scope.mod( $scope.selected.stage.index,$scope.colors.length)] + "'";
-        
+
         if( svg.width !== "" || svg.width !== undefined)
           { svgString += " width='" + $scope.visibleWidth() + "'"; }else{ svgString += " width='250'"; }
         if( svg.height !== ""|| svg.height !== undefined)
           { svgString += " height='" + $scope.visibleHeight() + "'"; }else{ svgString += " height='250'"; }
         if( svg.viewBox !== "" )
           { svgString += " viewBox='"  + svg.viewBox + "'";}
-          
+
         $scope.addElementPreview($scope.addElementDialog.elements[$scope.addElementDialog.selected].name);
         svgString+=" >"+$scope.selected.stage.svgs[$scope.selected.svg].content+$scope.contentElementPreview+"</svg>";
         $scope.contentPreview = svgString;
-        
+
       }
 
       $scope.$on('ngRepeatFinished', function(ngRepeatFinishedEvent) {
@@ -752,11 +753,11 @@
         $scope.makeSvgPreview();
       };
     };
-    
+
     function RouteController ($scope, $rootScope, $routeParams) {
       // Getting the slug from $routeParams
       var slug = $routeParams.slug;
-      
+
       $scope.$emit('routeLoaded', {slug: slug});
       $scope.page = $rootScope.pages[slug];
     }
@@ -774,4 +775,3 @@
 
         return scope[scopeSplit[scopeSplit.length - 1]];
     }
-    
